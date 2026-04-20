@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Pivot - FriendsOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#8A2BE2",
+          "background": "#FFF9E6",
+          "surface": "#FFFFFF",
+          "text": "#2B2B2B",
+          "muted": "#FF6B6B",
+          "accent": "#00CED1",
+          "warning": "#FFD700",
+        },
+        fontFamily: {
+          "heading": ['"Fredoka One"', "cursive"],
+          "body": ['"Nunito"', "sans-serif"],
+        },
+        borderRadius: {
+          "lg": "16px",
+          "full": "9999px"
+        },
+        boxShadow: {
+          "hard": "6px 6px 0px #2B2B2B",
+          "hard-hover": "10px 10px 0px #2B2B2B",
+        },
+        borderWidth: {
+          "heavy": "4px",
+        }
+      },
+    },
+  }
+</script>
+<style>
+  /* Base custom styles to ensure design tokens match if Tailwind classes fall short */
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.text');
+    font-family: theme('fontFamily.body');
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: theme('fontFamily.heading');
+    font-weight: 400;
+  }
+
+  .border-heavy {
+    border: theme('borderWidth.heavy') solid theme('colors.text');
+  }
+
+  /* Custom Range Input Styling for 90s feel */
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: theme('colors.warning');
+    border: 2px solid theme('colors.text');
+    cursor: pointer;
+    margin-top: -8px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    box-shadow: 2px 2px 0px theme('colors.text');
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: theme('colors.surface');
+    border-radius: theme('borderRadius.full');
+    border: 2px solid theme('colors.text');
+  }
+
+  /* Focus states */
+  input[type=range]:focus {
+    outline: none;
+  }
+  
+  .btn-hover-effect {
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  }
+  .btn-hover-effect:hover {
+    transform: translateY(-4px) translateX(-4px);
+    box-shadow: theme('boxShadow.hard-hover');
+  }
+  .btn-hover-effect:active {
+    transform: translateY(2px) translateX(2px);
+    box-shadow: 2px 2px 0px theme('colors.text');
+  }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8">
+<!-- The Pivot (What-If Builder) Sidebar -->
+<aside class="w-full max-w-sm bg-surface border-heavy rounded-lg shadow-hard p-6 flex flex-col gap-6 font-body">
+<!-- Header -->
+<header class="flex items-center justify-between border-b-4 border-text pb-4">
+<h2 class="font-heading text-2xl text-primary tracking-wide">The Pivot!</h2>
+<span class="material-symbols-outlined text-warning text-3xl" style="font-variation-settings: 'FILL' 1;">
+            alt_route
+        </span>
+</header>
+<!-- Content Form -->
+<div class="flex flex-col gap-5 flex-grow">
+<!-- Scenario Override -->
+<div class="flex flex-col gap-2">
+<label class="font-bold text-lg text-text flex items-center gap-2" for="scenario-input">
+<span class="material-symbols-outlined text-muted">edit_note</span>
+                Scenario Override
+            </label>
+<textarea class="w-full h-[120px] resize-none border-heavy rounded-lg p-3 bg-background text-text focus:outline-none focus:ring-4 focus:ring-accent font-semibold placeholder:text-text/50" id="scenario-input" placeholder="e.g., A monkey steals the remote..."></textarea>
+</div>
+<div class="border-t-2 border-dashed border-muted my-2"></div>
+<!-- Emotion Overrides -->
+<div class="flex flex-col gap-6">
+<h3 class="font-heading text-xl text-text">Tweak the Vibe</h3>
+<!-- Slider 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-bold text-md text-text">Chaos Level</label>
+<span class="text-sm font-bold bg-warning px-2 py-0.5 rounded-full border-2 border-text shadow-[2px_2px_0px_#2B2B2B]">80%</span>
+</div>
+<input class="w-full mt-1" max="100" min="1" type="range" value="80"/>
+</div>
+<!-- Slider 2 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-bold text-md text-text">Monica Cleanliness Level</label>
+<span class="text-sm font-bold bg-warning px-2 py-0.5 rounded-full border-2 border-text shadow-[2px_2px_0px_#2B2B2B]">100%</span>
+</div>
+<input class="w-full mt-1" max="100" min="1" type="range" value="100"/>
+</div>
+<!-- Slider 3 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-bold text-md text-text">Sarcasm Meter</label>
+<span class="text-sm font-bold bg-warning px-2 py-0.5 rounded-full border-2 border-text shadow-[2px_2px_0px_#2B2B2B]">45%</span>
+</div>
+<input class="w-full mt-1" max="100" min="1" type="range" value="45"/>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-4 pt-4 border-t-4 border-text">
+<button class="btn-hover-effect w-full h-[56px] bg-accent border-heavy rounded-lg shadow-hard flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden group">
+<span class="font-heading text-xl text-text uppercase tracking-wider relative z-10">ACTION!</span>
+<span class="material-symbols-outlined text-text text-2xl relative z-10" style="font-variation-settings: 'FILL' 1;">movie</span>
+<!-- Playful 90s hover effect background element -->
+<div class="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-in-out z-0"></div>
+</button>
+<p class="text-center text-xs font-bold text-muted mt-3">Warning: May cause timeline splits.</p>
+</div>
+</aside>
+</body></html>

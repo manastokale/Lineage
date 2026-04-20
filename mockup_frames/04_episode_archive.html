@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Episode Archive | Sitcom Command</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&amp;family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                cream: "#FFF9E6",
+                primary: "#FFD600", // Yellow-400 equivalent
+                accent: "#F472B6", // Pink-400
+                highlight: "#22D3EE", // Cyan-400
+                ink: "#000000"
+            },
+            borderRadius: {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            fontFamily: {
+                    "headline": ["Fredoka One", "Public Sans", "sans-serif"],
+                    "body": ["Public Sans", "sans-serif"],
+                    "label": ["Public Sans", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #FFF9E6; font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+        .neo-brutalism-card {
+            background-color: white;
+            border: 4px solid black;
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+            transition: all 0.1s ease-in-out;
+        }
+        .neo-brutalism-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body class="bg-cream text-ink">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center px-6 h-20 w-full bg-yellow-400 dark:bg-yellow-500 text-black border-b-4 border-black z-50 sticky top-0">
+<div class="text-3xl font-black italic text-black dark:text-black uppercase">Sitcom Command</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-black uppercase tracking-tighter text-black/70 hover:bg-cyan-400 hover:text-black transition-none px-3 py-1" href="#">Studio</a>
+<a class="font-black uppercase tracking-tighter border-b-4 border-pink-500 text-black hover:bg-cyan-400 hover:text-black transition-none px-3 py-1" href="#">Episodes</a>
+<a class="font-black uppercase tracking-tighter text-black/70 hover:bg-cyan-400 hover:text-black transition-none px-3 py-1" href="#">Characters</a>
+<a class="font-black uppercase tracking-tighter text-black/70 hover:bg-cyan-400 hover:text-black transition-none px-3 py-1" href="#">Script</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-black active:translate-y-1">settings</button>
+<button class="material-symbols-outlined text-black active:translate-y-1">help</button>
+</div>
+</nav>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex flex-col w-64 h-screen fixed left-0 top-20 bg-white dark:bg-zinc-100 border-r-4 border-black shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="p-6 border-b-4 border-black bg-pink-400">
+<h2 class="text-xl font-black text-black">Director's Cut</h2>
+<p class="font-bold text-sm text-black/80">Season 1</p>
+</div>
+<nav class="flex flex-col flex-1 p-2">
+<div class="text-black p-4 font-bold text-lg hover:bg-cyan-300 transition-none cursor-pointer flex items-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</div>
+<div class="bg-pink-400 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] m-2 p-4 font-bold text-lg hover:bg-cyan-300 transition-none cursor-pointer flex items-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none">
+<span class="material-symbols-outlined">movie_filter</span>
+<span>Archive</span>
+</div>
+<div class="text-black p-4 font-bold text-lg hover:bg-cyan-300 transition-none cursor-pointer flex items-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none">
+<span class="material-symbols-outlined">face</span>
+<span>Cast</span>
+</div>
+<div class="mt-auto text-black p-4 font-bold text-lg hover:bg-cyan-300 transition-none cursor-pointer flex items-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none border-t-4 border-black pt-6">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</div>
+</nav>
+<div class="p-4 border-t-4 border-black flex items-center gap-3 bg-yellow-400">
+<div class="w-10 h-10 border-2 border-black bg-white overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<img alt="Director Profile" class="w-full h-full object-cover" data-alt="Portrait of a creative film director with glasses in a minimalist bright studio setting with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwnU1xPODYXwe5Pqwz6JwmqseVQtW0Dr24SWWFgXi9NYzXjKVOafmbyw-wKyUyn5kOfavMi1ZrA_BhpTKVOFhaGkJKk7_pudOB0Ddi5UQZKXCMJElJ3mv94tkaf0HLvoJmhiCBAdKFr9U3Gkyo74p5EJJWkelzh9IDYQNkgkAnDWrJKl6PgRB79Z3_JGvJT-LWolJl8oVXolCNb3ilDCHhReI5QbcioxHjzMXl2DB8Xf_Lc-GPnlrvryc4H1wGOSYgF7t4EhahpdY"/>
+</div>
+<span class="font-black text-black text-sm uppercase">C. Geller</span>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 p-6 mb-20 md:mb-0">
+<!-- Header -->
+<header class="mb-12 mt-4">
+<h1 class="text-6xl md:text-8xl font-headline text-ink tracking-tight mb-2 drop-shadow-[4px_4px_0px_#F472B6]">
+                Episode Archive
+            </h1>
+<div class="flex items-center gap-4 mt-6">
+<div class="inline-block bg-highlight border-2 border-black px-4 py-2 font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    Total: 24 Episodes
+                </div>
+<div class="inline-block bg-accent border-2 border-black px-4 py-2 font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    Season 1 Active
+                </div>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<!-- Card 1 -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-white">
+<div class="h-48 border-b-4 border-black relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Vintage 90s style fountain in a city park with warm morning sunlight and nostalgic grain effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBexZD1fLdxNLaDI-1pBNIs2Xdt8Lws-TDhvttulamIci84VBus8eDcMIBzufD1x3DpOnQpqgN_kIu4syMhkzhKGyWV2fkue2P5b45gR380f6YzI1rteEkuDNIdmybfVM9qZKtpf-IteX96YH9fNOtNPRVUQDddmRw7JpU1sqD8tf7XmbQbi5lVziZYwJhncfM9xmonbw-NJWMzqNjHcOZoRbEh62664-ByYGPfratNcQreSiwEDohEQcVhAXL9errd2jms5mFvRLg"/>
+<div class="absolute top-4 left-4 bg-yellow-400 border-2 border-black px-2 py-1 font-black text-xs uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        FINAL
+                    </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-2">
+<span class="font-black text-pink-500 text-sm tracking-widest uppercase">S01E01</span>
+<span class="material-symbols-outlined text-black">coffee</span>
+</div>
+<h3 class="font-headline text-2xl text-ink leading-tight mb-4">The One Where It All Began</h3>
+</div>
+<div class="pt-4 border-t-2 border-black/10 flex justify-between items-center text-xs font-bold text-black/60">
+<span>CREATED: SEPT 22, 1994</span>
+<span class="material-symbols-outlined text-sm">schedule</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-white">
+<div class="h-48 border-b-4 border-black relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Warm cozy apartment interior with a purple wall, vintage furniture, and soft window light through sheer curtains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOh3c_NLjofBbemBTaaLzwrx-ESYXjMS2hDKlaPk5pBbS9wk1H_m1ffI3jqXCbtPSwpocr68F3L66aoVPQdg_xubZVL28Zc3QZuZuIHZaGcIWF2Mq9GmxBXitlsrpDSUBNLTbX5ocO7_-j0oVRKsg3sOsExFlwBpUOZ0ii6yIuT2AzsQretrpDakV19EoNXkEgt4ckq24xZnakIeq1UlQF2-upzFq5cRJQ8FcIFhBEWa5lPpgESLyGtwrG6igDyAn3zMwxYSyoHC0"/>
+<div class="absolute top-4 left-4 bg-cyan-400 border-2 border-black px-2 py-1 font-black text-xs uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        DRAFT
+                    </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-2">
+<span class="font-black text-pink-500 text-sm tracking-widest uppercase">S01E02</span>
+<span class="material-symbols-outlined text-black">apartment</span>
+</div>
+<h3 class="font-headline text-2xl text-ink leading-tight mb-4">The One with the Sonogram</h3>
+</div>
+<div class="pt-4 border-t-2 border-black/10 flex justify-between items-center text-xs font-bold text-black/60">
+<span>CREATED: SEPT 29, 1994</span>
+<span class="material-symbols-outlined text-sm">edit_document</span>
+</div>
+</div>
+</div>
+<!-- Card 3 (Feature Large) -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-pink-100 md:col-span-2">
+<div class="flex flex-col md:flex-row h-full">
+<div class="md:w-1/2 border-b-4 md:border-b-0 md:border-r-4 border-black relative overflow-hidden h-64 md:h-auto">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Dynamic corporate office setting with a chalkboard wall full of colorful brainstorming notes and sketches in natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9CktZtwyNSk-cUIRB9trc-0V-DIjQmmgKKG-ZEJMsRWVS9YLGDaxNAqz9R3pBqemW7hSuzu96r6aTP9RbNt_sF-NaBNyb7AYnUyKBkYH9MEEfVy-4PBe6VJPW2_btInrUCre6IO_7DSWx94OXb_fUn5fsjOjg_eVteHw6TjukAHkdI8DVtrDJvSw6z04U9N5946bMd8cCmPVmfv5fy_LmzUFTl7xOe-sRmNlp_kmLfY_T81m1KbhvBAfvnbZ2tQ2HZCIr7bCVGrU"/>
+<div class="absolute top-4 left-4 bg-purple-500 text-white border-2 border-black px-4 py-2 font-black text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                            WHAT-IF BRANCH
+                        </div>
+</div>
+<div class="p-8 md:w-1/2 flex flex-col justify-between bg-white">
+<div>
+<div class="flex items-start justify-between mb-4">
+<span class="font-black text-pink-500 text-lg tracking-widest uppercase">S01E07 (ALT)</span>
+<span class="material-symbols-outlined text-4xl text-black">bolt</span>
+</div>
+<h3 class="font-headline text-4xl text-ink leading-none mb-6">The One Where the Power Never Came Back</h3>
+<p class="text-black/70 font-bold mb-6">Explore the alternate reality where the ATM vestibule blackout lasted for three entire days. A dramatic shift for the season arc.</p>
+</div>
+<div class="pt-6 border-t-4 border-black flex justify-between items-center text-sm font-black uppercase">
+<span>LAST EDITED: OCT 12, 1994</span>
+<button class="bg-yellow-400 border-2 border-black px-4 py-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1">OPEN SCRIPT</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-white">
+<div class="h-48 border-b-4 border-black relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Classic coffee shop bar with ceramic mugs and steam rising, warm nostalgic atmosphere with rich brown and beige tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfdsjdibuS1hEhkVFBakodkfSuvUQ3Jyt6b4uDintQDiFLubOAJU3QqhJmN1eeBRZQC29kIiw_m6IVw5kVhinR7h67Mbnua0XXi0izSI3INcgcSQfhkha33ygZ-cvc60xG8CCc9hzpTQfv6AszJ5rhO_nG6QXpzxIHoLyODDWpFtt7AHxuGDw008hirkLgFXACP5SSi1I-_bAZNJj0UvTsCLzjMAOTE_8AEWvLg1iQL05Z6VHdSxEK4YY2_a1qs_wbLeRV4b71ngo"/>
+<div class="absolute top-4 left-4 bg-yellow-400 border-2 border-black px-2 py-1 font-black text-xs uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        FINAL
+                    </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-2">
+<span class="font-black text-pink-500 text-sm tracking-widest uppercase">S01E03</span>
+<span class="material-symbols-outlined text-black">payments</span>
+</div>
+<h3 class="font-headline text-2xl text-ink leading-tight mb-4">The One with the Thumb</h3>
+</div>
+<div class="pt-4 border-t-2 border-black/10 flex justify-between items-center text-xs font-bold text-black/60">
+<span>CREATED: OCT 6, 1994</span>
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-white">
+<div class="h-48 border-b-4 border-black relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Retro 90s television screen showing static and bright neon color bars in a dark room with vibrant ambient glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD-10PelG_VCtb-vQEiGCTQJcLVl939MRXuWCvY01y98zYprF-EWmi1kirj-RP20v0UdiQlYDkemAXYms663j9-bLYdLU24kTv8myIpjGXZPYTT3t6mHb0c-KWn3QRE08GFyXZEZbQmZv3vWXIBbp8yBBd7x5RkbUfqdkhtYUrrpe-us64gDtRP2KCpkv82b4Y9_Rjtf59iWRAN5LPKkgvD7AnkxkQR70z48SBiQ4PBhXYuR1R99cxwq-P0mzUVzdnybLb4gthc7E"/>
+<div class="absolute top-4 left-4 bg-yellow-400 border-2 border-black px-2 py-1 font-black text-xs uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        FINAL
+                    </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-2">
+<span class="font-black text-pink-500 text-sm tracking-widest uppercase">S01E04</span>
+<span class="material-symbols-outlined text-black">local_pizza</span>
+</div>
+<h3 class="font-headline text-2xl text-ink leading-tight mb-4">The One with George Stephanopoulos</h3>
+</div>
+<div class="pt-4 border-t-2 border-black/10 flex justify-between items-center text-xs font-bold text-black/60">
+<span>CREATED: OCT 13, 1994</span>
+<span class="material-symbols-outlined text-sm">done_all</span>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="neo-brutalism-card p-0 flex flex-col group bg-white">
+<div class="h-48 border-b-4 border-black relative overflow-hidden">
+<div class="w-full h-full bg-highlight flex items-center justify-center p-8 text-center border-b-2 border-black/20">
+<span class="material-symbols-outlined text-7xl text-black/20">add_circle</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-center items-center">
+<h3 class="font-headline text-2xl text-ink text-center mb-4">Create New Episode</h3>
+<button class="bg-black text-white px-8 py-3 font-black uppercase tracking-widest hover:bg-accent transition-colors">START SCRIPT</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 flex justify-around items-center z-50 bg-yellow-400 dark:bg-yellow-500 border-t-4 border-black shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center justify-center text-black h-full px-2 hover:bg-cyan-400 active:scale-95" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[12px] font-black uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-pink-400 border-x-2 border-black h-full px-2 hover:bg-cyan-400 active:scale-95" href="#">
+<span class="material-symbols-outlined">video_library</span>
+<span class="text-[12px] font-black uppercase">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-black h-full px-2 hover:bg-cyan-400 active:scale-95" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[12px] font-black uppercase">Cast</span>
+</a>
+<a class="flex flex-col items-center justify-center text-black h-full px-2 hover:bg-cyan-400 active:scale-95" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-[12px] font-black uppercase">Menu</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) - Suppressed as per instructions for Archive/List view but added for illustrative creative spark if needed elsewhere, though following strict rules we omit it unless mandated -->
+</body></html>

@@ -4,7 +4,7 @@
   "buildCommand": "npm --prefix frontend run build",
   "outputDirectory": "frontend/dist",
   "functions": {
-    "api/**/*.py": {
+    "api/*.py": {
       "maxDuration": 60
     }
   },

@@ -9,7 +9,7 @@ Lineage is a screenplay intelligence workspace for exploring a TV script as a li
 ![Rerank debugger](rerank_dev.png)
 
 **Prior Relationship Arc Summariser:**  
-![Rerank debugger](rerank_dev.png)
+![Character Arcs](relation_graph.png)
 
 ## What it is
 

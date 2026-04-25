@@ -5,8 +5,10 @@ function resolveBaseUrl() {
   if (configured) return configured
   if (typeof window !== "undefined") {
     const { protocol, hostname, port } = window.location
-    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "0.0.0.0"
-    if (isLocalHost && port !== "8000") {
+    // In local/LAN static serving, the frontend runs on 5173 and the backend
+    // runs on 8000 on the same host. On Vercel, there is no explicit port and
+    // `/api` should stay same-origin.
+    if (port && port !== "8000") {
       return `${protocol}//${hostname}:8000`
     }
     return ""

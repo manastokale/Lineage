@@ -115,6 +115,12 @@ case "$MODE" in
   *) usage; fail "Unsupported mode '$MODE'" ;;
 esac
 
+if [[ "$MODE" == "dev" ]]; then
+  APP_ENV_VALUE="development"
+else
+  APP_ENV_VALUE="production"
+fi
+
 mkdir -p "$RUN_DIR"
 
 STACK_ID="$SCOPE.$MODE"
@@ -135,6 +141,12 @@ fi
 
 BACKEND_URL="http://$PUBLIC_HOST:$BACKEND_PORT"
 FRONTEND_URL="http://$PUBLIC_HOST:$FRONTEND_PORT"
+
+if [[ "$SCOPE" == "lan" ]]; then
+  CORS_ORIGINS="$FRONTEND_URL,http://127.0.0.1:$FRONTEND_PORT,http://localhost:$FRONTEND_PORT"
+else
+  CORS_ORIGINS="$FRONTEND_URL,http://localhost:$FRONTEND_PORT"
+fi
 
 if [[ "$ACTION" == "stop" ]]; then
   echo "Stopping Lineage $STACK_ID..."
@@ -196,7 +208,7 @@ echo "Backend:  $BACKEND_DIR"
 echo "Frontend: $FRONTEND_DIR"
 
 echo "Starting backend..."
-launch_detached "cd '$BACKEND_DIR' && LINEAGE_MEMORY_BACKEND=chroma '$VENV_PYTHON' -u -m uvicorn main:app --host $BACKEND_BIND_HOST --port $BACKEND_PORT" "$BACKEND_LOG" "$BACKEND_PID_FILE"
+launch_detached "cd '$BACKEND_DIR' && APP_ENV='$APP_ENV_VALUE' CORS_ALLOWED_ORIGINS='$CORS_ORIGINS' LINEAGE_MEMORY_BACKEND=chroma '$VENV_PYTHON' -u -m uvicorn main:app --host $BACKEND_BIND_HOST --port $BACKEND_PORT" "$BACKEND_LOG" "$BACKEND_PID_FILE"
 
 if ! wait_for_url "http://127.0.0.1:$BACKEND_PORT/api/health" 45; then
   echo "Backend failed to bind to port $BACKEND_PORT."

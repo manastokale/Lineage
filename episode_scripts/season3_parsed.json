@@ -181,8 +181,8 @@
             "text": "Monica and Rachel had syrup, now I can get my man to cheer up. Good morning Joey.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Joey"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": "entering and singing laughs hysterically"
           },
@@ -1668,8 +1668,8 @@
             "text": "Oh, hey, Chandler, we, ah, we stopped by the coffee shop and ran into Ross.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -6920,8 +6920,8 @@
             "text": "Yeah! Hey, do Monica and Rachel work there?",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Rachel"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": ""
           }
@@ -7861,8 +7861,8 @@
             "text": "Well, there was that one time that Monica and Rachel got together.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Rachel"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -9729,8 +9729,8 @@
             "text": "Ross-Joey, Joey-Ross.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": "they shake hands"
           },
@@ -10203,8 +10203,8 @@
             "text": "Ugh! I don’t know Monica. It feels funny just being here. I mean if you buy a bed from Janice’s ex-husband, that’s like betraying Chandler.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Janice"
+              "Janice",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -14108,8 +14108,8 @@
             "text": "Okay, looks like Ross and I are captains. Okay, so um, I bunnied first so that means I get to pick first. Joey.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -15176,8 +15176,8 @@
             "text": "Come on Phoebe, let’s go! Come on, it’s time to get serious, huddle up. Joey, keep your head in the game.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Phoebe"
+              "Phoebe",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -15374,8 +15374,8 @@
             "text": "Oh, what a great argument, exhaling! All right, y'know what, I’ll prove it to you, okay. I’ll trade you Joey for Rachel, and I’ll still win the game.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Rachel"
+              "Rachel",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -15400,8 +15400,8 @@
             "text": "Fine, fine, Rachel your with Monica, Joey you’re with me.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Joey"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -19528,8 +19528,8 @@
             "text": "What?! Ross y'know this isn’t even about you! I mean this is about Rachel and something wonderful happening for her. I mean you know even if you’re right, what if he wants to sleep with her, does it mean he gets too?",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -22844,8 +22844,8 @@
             "text": "Um, Chandler, Ross, this is Robert.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -25294,8 +25294,8 @@
             "text": "Okay, well if I stop playing with Joey and Chandler, can I play with Mark?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -26676,8 +26676,8 @@
             "text": "All right ah, Ross, this is the extent of my knowledge on the subject. Call Rachel.",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": "holds up a notepad"
           },
@@ -29456,8 +29456,8 @@
             "text": "Gunther! Gunther. Gunther, please tell me you didn’t say anything to Rachel about me and the girl from the Xerox place.",
             "emotion_tags": [],
             "addressed_to": [
-              "Gunther",
-              "Rachel"
+              "Rachel",
+              "Gunther"
             ],
             "stage_direction": ""
           },
@@ -30074,7 +30074,7 @@
             "text": "Look Rachel, I wanted to tell you, I thought I should, I-I did, and then Chandler and Joey convinced me not to.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
+              "Rachel",
               "Joey"
             ],
             "stage_direction": ""
@@ -30281,8 +30281,8 @@
             "text": "Yeah, come on, it’s Ross and Rachel, they’ve got too.",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -30334,8 +30334,8 @@
             "text": "What, now you’re not even taking to me? Look Rachel, I-I’m sorry, okay, I’m sorry, I was out of my mind. I thought I’d lost you, I didn’t know what to do. Come on! Come on, how insane must I have been to do something like this? Huh? I-I don’t cheat right, I, that’s not me, I’m not Joey!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Rachel"
+              "Rachel",
+              "Joey"
             ],
             "stage_direction": "moves over to the coffee table"
           },
@@ -30620,7 +30620,7 @@
             "text": "Well Ross was hangin’ out over at our place, Rachel comes over to borrow some moisturiser from Chandler....",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
+              "Rachel",
               "Ross"
             ],
             "stage_direction": ""
@@ -30678,8 +30678,8 @@
             "text": "Y'know I had a dream where Ross and Rachel were still together, they never broke up. And we were all just like hanging out, and everyone was happy....",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -31580,8 +31580,8 @@
             "text": "Ladies, ladies, let’s just compromise okay? Phoebe, Rachel take off Monica’s bra.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -31969,8 +31969,8 @@
             "text": "Oh good, oh Joey and Chandler are back.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -40262,8 +40262,8 @@
             "text": "Okay. Does it have to do with Ross and Rachel?",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -40747,8 +40747,8 @@
             "text": "Okay, so it doesn’t involve Ross or Rachel or Chandler or Joey. But, what about Pete?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -49144,8 +49144,8 @@
             "text": "Yeah, Joey and Chandler sure are funny.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": ""
           },

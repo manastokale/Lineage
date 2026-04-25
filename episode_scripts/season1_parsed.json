@@ -370,8 +370,8 @@
             "text": "De-caff. Okay, everybody, this is Rachel, another Lincoln High survivor. This is everybody, this is Chandler, and Phoebe, and Joey, and- you remember my brother Ross?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": "pointing at Rachel to All to Rachel"
           },
@@ -836,8 +836,8 @@
             "text": "Right, you're not even getting your honeymoon, God.. No, no, although, Aruba, this time of year... talk about your- -big lizards... Anyway, if you don't feel like being alone tonight, Joey and Chandler are coming over to help me put together my new furniture.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": "thinks"
           },
@@ -3572,8 +3572,8 @@
             "text": "Ross, you remember Susan.",
             "emotion_tags": [],
             "addressed_to": [
-              "Susan",
-              "Ross"
+              "Ross",
+              "Susan"
             ],
             "stage_direction": ""
           },
@@ -5798,8 +5798,8 @@
             "text": "So I have a flaw! Big deal! Like Joey's constant knuckle-cracking isn't annoying? And Ross, with his over-pronouncing every single word? And Monica, with that snort when she laughs? I mean, what the hell is that thing? ...I accept all those flaws, why can't you accept me for this?",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Joey"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           }
@@ -6855,8 +6855,8 @@
             "text": "C'mon, Ross! You, me, Joey, ice, guys' night out, c'mon, whaddya say, big guy, Huh? Huh? Huh?",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": "trying to stop Ross leaving Pretending to punch him in the stomach."
           },
@@ -9132,8 +9132,8 @@
             "text": "Ok, bye. Well, Monica's not coming, it's just gonna be me and Rachel.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Rachel"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": "on phone hangs up"
           },
@@ -13510,8 +13510,8 @@
             "text": "Yuh-huh! I was the last one to know when Chandler got bitten by the peacock at the zoo. I was the last one to know when you had a crush on Joey when he was moving in. Looks like I was second to last.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": "Monica gestures at Phoebe to shut up; Joey looks surprised but pleased"
           }
@@ -14403,8 +14403,8 @@
             "text": "Hey Ross. This probably isn't the best time to bring it up, but you have to throw a party for Monica.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           }
@@ -19125,8 +19125,8 @@
             "text": "I'm sorry, okay. It's just that Chandler has somebody, and Phoebe has somebody- I thought I'd ask Fun Bobby.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Phoebe"
+              "Phoebe",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -21593,8 +21593,8 @@
             "text": "I was really upset about Rachel and Paolo, and I think I had too much tequila, and Nora- um, Mrs. Mom- your Bing- was just being nice, y'know, and- But nothing happened, nothing- Ask Joey, Joey, uh, came in-",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Rachel"
+              "Rachel",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -25158,8 +25158,8 @@
             "text": "Oh, 'scuse me. So Ross, uh, how's the wife? Off there too, uh? Uh, Chandler, quick, say something funny!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": "Ross whines and lays his head on Chandler's shoulder"
           }
@@ -26030,8 +26030,8 @@
             "text": "Yeah, uh, Joey said I could use your shower, since, uh, Chandler's in ours?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Joey",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -26816,8 +26816,8 @@
             "text": "Come on, Ross, you gotta get back in the game here, ok? The Rachel thing's not happening, your ex-wife is a lesbian—I don't think we need a third...",
             "emotion_tags": [],
             "addressed_to": [
-              "Ross",
-              "Rachel"
+              "Rachel",
+              "Ross"
             ],
             "stage_direction": ""
           },
@@ -32256,8 +32256,8 @@
             "text": "Monica and Rachel's apartment. Err yeh, aayah, yeh, just one second... ..ah, Rachel, it's your dad.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Rachel"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": "on the phone handing it to Monica"
           },
@@ -34967,8 +34967,8 @@
             "text": "So, Phoebs owes $7.50, Monica, you owe $10, and Rachel, you owe fifteen big ones.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Rachel"
+              "Rachel",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -48246,8 +48246,8 @@
             "text": "Uh, yeah. Uh, Monica, y'know, honey, I've been thinking about it and I've decided this—this whole Ross thing, it's just not a good idea.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },

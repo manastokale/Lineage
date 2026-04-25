@@ -18,6 +18,16 @@ function resolveBaseUrl() {
 
 const BASE = resolveBaseUrl()
 
+function buildRequestUrl(path: string) {
+  if (BASE) {
+    return new URL(path, `${BASE}/`).toString()
+  }
+  if (typeof window !== "undefined") {
+    return new URL(path, window.location.origin).toString()
+  }
+  return `http://127.0.0.1:8000${path}`
+}
+
 function getDeviceId() {
   if (typeof window === "undefined") return "server"
   const storageKey = "lineage-device-id"
@@ -32,7 +42,7 @@ function getDeviceId() {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const url = BASE ? `${BASE}${path}` : path
+  const url = buildRequestUrl(path)
   const res = await fetch(url, {
     ...init,
     headers: {

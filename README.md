@@ -2,8 +2,6 @@
 
 Lineage is a screenplay intelligence workspace for exploring a TV script as a living document instead of a flat transcript. It lets a user read an episode in screenplay form, click any dialogue line, and ask a character a question from that exact moment in time. It also shows prior character arcs and relationship context so answers stay grounded in what a character would realistically know.
 
-**Live demo:** _add your Vercel link here_
-
 **Home Page:**  
 ![Home Page](homepage.png)
 

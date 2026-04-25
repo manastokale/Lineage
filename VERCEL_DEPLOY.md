@@ -40,4 +40,4 @@ Optional:
 - The app is deployed as a single-origin frontend + API setup, so `VITE_API_URL` is not required on Vercel.
 - Device-local UI/session state is kept in browser `localStorage`.
 - Ask thread continuity is sent from the client with each request, so it still works under serverless instances.
-- Python is pinned via `.python-version` so Vercel uses the same major runtime as local development.
+- Python is pinned via `.python-version` so Vercel uses a deterministic runtime during deploys.

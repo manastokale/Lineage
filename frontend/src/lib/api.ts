@@ -1,5 +1,7 @@
 import type { CharacterFocusProfile, Episode, EpisodeGraph, HealthSnapshot, StatsOverview, TimelineEntry } from "../types"
 
+const DEVICE_ID_PATTERN = /^[A-Za-z0-9._:-]{8,128}$/
+
 function resolveBaseUrl() {
   const configured = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "")
   if (configured) return configured
@@ -20,10 +22,10 @@ const BASE = resolveBaseUrl()
 
 function buildRequestUrl(path: string) {
   if (BASE) {
-    return new URL(path, `${BASE}/`).toString()
+    return `${BASE}${path}`
   }
   if (typeof window !== "undefined") {
-    return new URL(path, window.location.origin).toString()
+    return `${window.location.origin}${path}`
   }
   return `http://127.0.0.1:8000${path}`
 }
@@ -31,14 +33,23 @@ function buildRequestUrl(path: string) {
 function getDeviceId() {
   if (typeof window === "undefined") return "server"
   const storageKey = "lineage-device-id"
-  const existing = window.localStorage.getItem(storageKey)
-  if (existing) return existing
+  try {
+    const existing = window.localStorage.getItem(storageKey)
+    if (existing && DEVICE_ID_PATTERN.test(existing)) return existing
+  } catch {
+    // ignore storage access issues and fall through to ephemeral id generation
+  }
   const next =
     typeof window.crypto?.randomUUID === "function"
       ? window.crypto.randomUUID()
       : `lineage-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
-  window.localStorage.setItem(storageKey, next)
-  return next
+  const normalized = DEVICE_ID_PATTERN.test(next) ? next : `lineage-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+  try {
+    window.localStorage.setItem(storageKey, normalized)
+  } catch {
+    // ignore storage access issues and just use the generated id for this request
+  }
+  return normalized
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

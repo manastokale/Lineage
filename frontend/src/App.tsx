@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Analytics } from "@vercel/analytics/react"
 
 import { fetchEpisodes } from "./lib/api"
 import CastRoster from "./pages/CastRoster"
@@ -68,6 +69,7 @@ export default function App() {
         <Route path="/usage" element={<UsageDashboard />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   )
 }

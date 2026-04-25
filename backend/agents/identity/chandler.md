@@ -2,11 +2,11 @@
 ## Version: 1.0 | Status: ACTIVE
 
 ## Current Emotion Levels (0–10)
-- Anxiety: 8
-- Joy: 5
-- Sarcasm: 9
-- Loneliness: 6
-- Anger: 3
+- Anxiety: 0
+- Joy: 10
+- Sarcasm: 10
+- Loneliness: 0
+- Anger: 0
 
 ## Dominant Memory Clusters
 - [S01E01] First meeting with the friend group at Central Perk → Comfort, belonging

@@ -57,6 +57,33 @@ h1, h2, h3, .font-headline {
 ::-webkit-scrollbar-thumb { background: #8a2ce2; border: 2px solid #000; border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: #6a1b9a; }
 
+@keyframes graph-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.feed-jump-dot {
+  width: 6px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: 9999px;
+  transition: all 0.18s ease;
+}
+
+.group:hover .feed-jump-dot,
+.feed-jump-dot:hover,
+.feed-jump-dot:focus-visible {
+  width: 12px;
+  height: 24px;
+  background: rgba(255, 214, 0, 0.95);
+  border-color: #000;
+}
+
+.feed-jump-dot.is-live {
+  background: rgba(255, 214, 0, 0.72);
+}
+
 /* ─── Range slider styling ───────────────────────────────────── */
 input[type="range"] {
   -webkit-appearance: none;

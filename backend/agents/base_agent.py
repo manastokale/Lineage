@@ -5,9 +5,7 @@ Each character subclass overrides get_system_prompt() only.
 
 from pathlib import Path
 from typing import Optional
-import json
 import re
-import os
 
 IDENTITY_DIR = Path(__file__).parent / "identity"
 
@@ -27,9 +25,6 @@ class BaseCharacterAgent:
         identity = self.load_identity()
         memories = context.get("memories", [])
         scene_context = context.get("scene_context", "")
-        what_if_note = ""
-        if context.get("what_if_active"):
-            what_if_note = f"\n\nIMPORTANT — SCENARIO OVERRIDE ACTIVE:\n{context.get('what_if_scenario', '')}\nRespond as {self.name} would given this new reality."
 
         memory_block = ""
         if memories:
@@ -47,7 +42,6 @@ Never break the fourth wall. Never acknowledge being an AI.
 
 ## Current Scene
 {scene_context}
-{what_if_note}
 
 ## Response Rules
 - Respond ONLY with {self.name}'s next line of dialogue.

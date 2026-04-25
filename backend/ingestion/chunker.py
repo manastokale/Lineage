@@ -3,17 +3,17 @@ Chunker: Takes parsed scene graphs and stores them in ChromaDB.
 
 Chunking strategy:
   - Per-character: each character's lines across a scene → one chunk
-  - Per-scene: full scene dialogue → one chunk (for episode-level retrieval)
-  - Metadata: episode_id, scene_id, speaker, emotion_tags, location
+  - Per-scene-window: overlapping windows for retrieval fidelity on longer scenes
+  - Per-scene: full scene dialogue chunk for broad lookup
 """
 
 import chromadb
 from chromadb.utils import embedding_functions
-from pathlib import Path
-import json
 import os
 
 EMBED_MODEL = "all-MiniLM-L6-v2"   # runs locally, no API key needed
+SCENE_WINDOW_SIZE = int(os.getenv("SCENE_WINDOW_SIZE", 12))
+SCENE_WINDOW_OVERLAP = int(os.getenv("SCENE_WINDOW_OVERLAP", 4))
 
 def get_chroma_client():
     mode = os.getenv("CHROMA_MODE", "embedded")
@@ -39,53 +39,110 @@ def get_or_create_collection(client, name: str):
         metadata={"hnsw:space": "cosine"}
     )
 
+
+def _ordered_unique_speakers(lines: list[dict]) -> list[str]:
+    seen = set()
+    ordered = []
+    for line in lines:
+        speaker = line["speaker"]
+        if speaker in seen:
+            continue
+        seen.add(speaker)
+        ordered.append(speaker)
+    return ordered
+
+
+def _scene_windows(lines: list[dict]) -> list[tuple[int, list[dict]]]:
+    if not lines:
+        return []
+
+    step = max(1, SCENE_WINDOW_SIZE - SCENE_WINDOW_OVERLAP)
+    windows = []
+    for start in range(0, len(lines), step):
+        window = lines[start:start + SCENE_WINDOW_SIZE]
+        if not window:
+            continue
+        windows.append((start, window))
+        if start + SCENE_WINDOW_SIZE >= len(lines):
+            break
+    return windows
+
+
 def chunk_episode(episode: dict, collection) -> int:
     """Store all scene chunks for one episode. Returns number of chunks added."""
     chunks_added = 0
     ep_id = episode["episode_id"]
+    title = episode.get("title", ep_id)
 
     for scene in episode["scenes"]:
         scene_id = scene["scene_id"]
         location = scene["location"]
+        lines = scene["lines"]
+
+        for window_idx, (start_idx, window_lines) in enumerate(_scene_windows(lines), start=1):
+            window_text = "\n".join(
+                f"{line['speaker']}: {line['text']}"
+                for line in window_lines
+            )
+            collection.upsert(
+                documents=[window_text],
+                ids=[f"{scene_id}_window_{window_idx:02d}"],
+                metadatas=[{
+                    "episode_id": ep_id,
+                    "episode_title": title,
+                    "scene_id": scene_id,
+                    "location": location,
+                    "chunk_type": "scene_window",
+                    "start_line": start_idx,
+                    "end_line": start_idx + len(window_lines) - 1,
+                    "line_count": len(window_lines),
+                    "speakers": ",".join(_ordered_unique_speakers(window_lines)),
+                }],
+            )
+            chunks_added += 1
 
         # Per-scene chunk (full dialogue)
         full_dialogue = "\n".join(
             f"{line['speaker']}: {line['text']}"
-            for line in scene["lines"]
+            for line in lines
         )
         if full_dialogue.strip():
-            collection.add(
+            collection.upsert(
                 documents=[full_dialogue],
                 ids=[f"{scene_id}_full"],
                 metadatas=[{
                     "episode_id": ep_id,
+                    "episode_title": title,
                     "scene_id": scene_id,
                     "location": location,
                     "chunk_type": "scene",
-                    "speakers": ",".join({l["speaker"] for l in scene["lines"]})
+                    "line_count": len(lines),
+                    "speakers": ",".join(_ordered_unique_speakers(lines)),
                 }]
             )
             chunks_added += 1
 
         # Per-character chunks within scene
-        speakers_in_scene = {l["speaker"] for l in scene["lines"]}
+        speakers_in_scene = _ordered_unique_speakers(lines)
         for speaker in speakers_in_scene:
-            char_lines = [l for l in scene["lines"] if l["speaker"] == speaker]
+            char_lines = [l for l in lines if l["speaker"] == speaker]
             char_text = "\n".join(
                 f"[{','.join(l['emotion_tags']) or 'neutral'}] {l['text']}"
                 for l in char_lines
             )
             if char_text.strip():
                 emotions = list({e for l in char_lines for e in l["emotion_tags"]})
-                collection.add(
+                collection.upsert(
                     documents=[char_text],
                     ids=[f"{scene_id}_{speaker.lower()}_lines"],
                     metadatas=[{
                         "episode_id": ep_id,
+                        "episode_title": title,
                         "scene_id": scene_id,
                         "location": location,
                         "chunk_type": "character",
                         "speaker": speaker,
+                        "line_count": len(char_lines),
                         "emotions": ",".join(emotions)
                     }]
                 )

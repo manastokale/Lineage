@@ -1,110 +1,97 @@
-import type { Agent, Episode, DialogueLine } from "../types"
+import type { CharacterFocusProfile, Episode, EpisodeGraph, HealthSnapshot, StatsOverview, TimelineEntry } from "../types"
 
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:8000"
-
-async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: { "ngrok-skip-browser-warning": "true" },
-  })
-  if (!res.ok) throw new Error(`API ${res.status}: ${path}`)
-  return res.json()
+function resolveBaseUrl() {
+  const configured = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "")
+  if (configured) return configured
+  if (typeof window !== "undefined") {
+    const { protocol, hostname, port } = window.location
+    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "0.0.0.0"
+    if (isLocalHost && port !== "8000") {
+      return `${protocol}//${hostname}:8000`
+    }
+    return ""
+  }
+  return "http://127.0.0.1:8000"
 }
 
-async function post<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
-    method: "POST",
+const BASE = resolveBaseUrl()
+
+function getDeviceId() {
+  if (typeof window === "undefined") return "server"
+  const storageKey = "lineage-device-id"
+  const existing = window.localStorage.getItem(storageKey)
+  if (existing) return existing
+  const next =
+    typeof window.crypto?.randomUUID === "function"
+      ? window.crypto.randomUUID()
+      : `lineage-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+  window.localStorage.setItem(storageKey, next)
+  return next
+}
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const url = BASE ? `${BASE}${path}` : path
+  const res = await fetch(url, {
+    ...init,
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "true",
+      "X-Lineage-Device": getDeviceId(),
+      ...(init?.headers || {}),
     },
-    body: JSON.stringify(body),
   })
-  if (!res.ok) throw new Error(`API ${res.status}: ${path}`)
+  if (!res.ok) {
+    const text = await res.text()
+    let detail = text
+    try {
+      const payload = JSON.parse(text)
+      if (typeof payload?.detail === "string" && payload.detail.trim()) {
+        detail = payload.detail.trim()
+      }
+    } catch {
+      // leave raw text as-is
+    }
+    throw new Error(`API ${res.status} ${path}: ${detail}`)
+  }
   return res.json()
 }
 
-// ── Health ─────────────────────────────────────────────
-export const fetchHealth = () => get<{
-  status: string
-  dummy_mode: boolean
-  dialogue_provider: string
-}>("/api/health")
+export const fetchHealth = () => request<HealthSnapshot>("/api/health")
+export const fetchStatsOverview = () => request<StatsOverview>("/api/stats/overview")
 
-// ── Agents ─────────────────────────────────────────────
-export const fetchAgents = () => get<Agent[]>("/api/agents/")
+export const fetchEpisodes = () => request<Episode[]>("/api/episodes/")
 
-export interface AgentProfile {
-  name: string
-  subtitle: string
-  version: string
-  status: string
-  quote: string
-  emoji: string
-  color: string
-  occupation: string
-  personality: Record<string, number>
-  recentLines: { scene: string; text: string; time: string }[]
-  relationships: { id: string; strength: string }[]
-}
-export const fetchAgentProfile = (name: string) =>
-  get<AgentProfile>(`/api/agents/${name}/profile`)
+export const fetchEpisode = (id: string) => request<Episode>(`/api/episodes/${id}`)
 
-// ── Episodes ───────────────────────────────────────────
-export const fetchEpisodes = () => get<Episode[]>("/api/episodes/")
+export const fetchEpisodeTimeline = (id: string) =>
+  request<TimelineEntry[]>(`/api/episodes/${id}/timeline`)
 
-export const fetchEpisode = (id: string) =>
-  get<Episode>(`/api/episodes/${id}`)
-
-// ── Streaming ──────────────────────────────────────────
-export function streamScene(
-  episodeId: string,
-  sceneId: string,
-  onLine: (line: DialogueLine) => void,
-  onDone: () => void,
-  signal?: AbortSignal,
-) {
-  const url = `${BASE}/api/stream/episode/${episodeId}/scene/${sceneId}`
-  fetch(url, {
-    headers: { "ngrok-skip-browser-warning": "true" },
-    signal,
-  }).then((res) => {
-    const reader = res.body?.getReader()
-    const decoder = new TextDecoder()
-    let buffer = ""
-
-    function pump(): Promise<void> | undefined {
-      return reader?.read().then(({ done, value }) => {
-        if (done) { onDone(); return }
-        buffer += decoder.decode(value, { stream: true })
-        const parts = buffer.split("\n\n")
-        buffer = parts.pop() || ""
-        for (const part of parts) {
-          const line = part.replace(/^data: /, "").trim()
-          if (!line || line === "[DONE]") {
-            if (line === "[DONE]") onDone()
-            continue
-          }
-          try { onLine(JSON.parse(line)) } catch {}
-        }
-        return pump()
-      })
-    }
-    pump()
+export const askAgent = (
+  name: string,
+  body: {
+    episode_id: string
+    scene_id: string
+    anchor_line_index: number
+    question: string
+    thread_messages?: { type: "user_question" | "agent_reply"; speaker: string; text: string }[]
+  },
+) =>
+  request<{
+    name: string
+    reply: string
+    references?: { kind: "character_arc" | "interaction_arc"; episode_id: string; title: string; participants?: string[] }[]
+  }>(`/api/agents/${encodeURIComponent(name)}/ask`, {
+    method: "POST",
+    body: JSON.stringify(body),
   })
-}
 
-// ── Pivot ──────────────────────────────────────────────
-export interface PivotRequest {
-  episode_id?: string
-  scene_id?: string
-  scenario?: string
-  chaos_level?: number
-  monica_cleanliness?: number
-  sarcasm_meter?: number
-}
-export interface PivotDiff {
-  original: { speaker: string; text: string }[]
-  generated: { speaker: string; text: string }[]
-}
-export const triggerWhatIf = (req: PivotRequest) =>
-  post<PivotDiff>("/api/pivot/what-if", req)
+export const fetchEpisodeGraph = (id: string) =>
+  request<EpisodeGraph>(`/api/episodes/${id}/graph`)
+
+export const fetchCharacterFocus = (episodeId: string, name: string) =>
+  request<CharacterFocusProfile>(`/api/episodes/${episodeId}/characters/${encodeURIComponent(name)}`)
+
+export const fetchInteractionFocus = (episodeId: string, characters: string[]) =>
+  request<{ episode_id: string; title: string; participants: string[]; summary: string }[]>(
+    `/api/episodes/${episodeId}/interactions?characters=${encodeURIComponent(characters.join(","))}`,
+  )

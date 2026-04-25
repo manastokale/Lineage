@@ -222,10 +222,10 @@ export default function CastRoster() {
         </div>
       }
     >
-      <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[minmax(0,1fr)_380px]">
-        <section className="grid min-h-0 grid-rows-[1fr_auto] border-4 border-black bg-white shadow-hard-sm">
+      <div className="grid h-full min-h-0 gap-4 overflow-y-auto xl:grid-cols-[minmax(0,1fr)_380px] xl:overflow-hidden">
+        <section className="grid h-full min-h-[26rem] min-h-0 grid-rows-[1fr_auto] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
           <div className="min-h-0 overflow-hidden p-4">
-            <div className="h-full rounded-sm border-2 border-black bg-[#fffaf1] p-3">
+            <div className="h-full min-h-[18rem] rounded-sm border-2 border-black bg-[#fffaf1] p-3 sm:min-h-[22rem]">
               <svg viewBox="0 0 620 320" className="h-full w-full">
                 <defs>
                   {positionedNodes.map((node) => (
@@ -327,7 +327,7 @@ export default function CastRoster() {
           </div>
         </section>
 
-        <aside className="grid min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm">
+        <aside className="grid h-full min-h-[24rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
           <div className="border-b-4 border-black bg-accent px-4 py-3">
             <div className="font-black uppercase tracking-[0.18em]">
               {selectedCharacters.length > 1 ? "Shared Prior Interactions" : "Prior Character Arcs"}

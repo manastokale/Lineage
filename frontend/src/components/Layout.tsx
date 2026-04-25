@@ -17,8 +17,8 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
   ]
 
   return (
-    <div className="h-screen overflow-hidden bg-cream text-ink">
-      <div className="flex h-full overflow-hidden">
+    <div className="min-h-screen bg-cream text-ink md:h-screen md:overflow-hidden">
+      <div className="flex min-h-screen flex-col md:h-full md:min-h-0 md:flex-row md:overflow-hidden">
         <aside className="hidden w-56 shrink-0 flex-col border-r-4 border-black bg-white md:flex">
           <div className="flex h-[93px] items-center border-b-4 border-black bg-accent px-5 py-6">
             <button onClick={() => navigate("/")} className="w-full text-left">
@@ -51,8 +51,8 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
         </aside>
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-          <header className="border-b-4 border-black bg-primary px-4 py-4 md:h-[93px] md:px-6">
-            <div className="flex items-center justify-between gap-4">
+          <header className="border-b-4 border-black bg-primary px-3 py-3 sm:px-4 md:h-[93px] md:px-6 md:py-4">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
               <div className="min-w-0 flex-1">
                 {headerContent || (
                   <div>
@@ -62,14 +62,14 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
                   </div>
                 )}
               </div>
-              <nav className="flex items-center gap-2 md:hidden">
+              <nav className="flex flex-wrap items-center gap-2 md:hidden">
                 {navItems.map((item) => {
                   const active = location.pathname === item.path
                   return (
                     <button
                       key={item.path}
                       onClick={() => navigate(item.path)}
-                      className={`border-2 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] ${
+                      className={`border-2 px-3 py-2 text-[11px] font-black uppercase tracking-[0.16em] sm:px-4 sm:text-xs sm:tracking-[0.18em] ${
                         active ? "border-black bg-black text-white" : "border-black bg-white"
                       }`}
                     >
@@ -80,7 +80,7 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
               </nav>
             </div>
           </header>
-          <main className="min-h-0 flex-1 overflow-hidden p-4 md:p-6">{children}</main>
+          <main className="min-h-0 flex-1 overflow-hidden p-3 sm:p-4 md:p-6">{children}</main>
         </div>
       </div>
     </div>

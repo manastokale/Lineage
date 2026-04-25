@@ -98,8 +98,8 @@ export default function UsageDashboard() {
         </div>
       }
     >
-      <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
-        <section className="grid min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm">
+      <div className="grid h-full min-h-0 gap-4 overflow-y-auto lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:overflow-hidden">
+        <section className="grid h-full min-h-[30rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm lg:min-h-0">
           <div className="border-b-4 border-black bg-accent px-4 py-3">
             <div className="font-black uppercase tracking-[0.18em]">System Health</div>
           </div>
@@ -121,7 +121,7 @@ export default function UsageDashboard() {
               </div>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               <StatCard label="API Status" value={overview?.status?.toUpperCase() || "LOADING"} tone={overview?.status === "ok" ? "good" : "default"} />
               <StatCard
                 label={overview?.chroma.mode === "readonly_json" ? "Memory Store" : "ChromaDB"}
@@ -134,7 +134,7 @@ export default function UsageDashboard() {
               <StatCard label="Dummy Mode" value={overview?.dummy_mode ? "ON" : "OFF"} tone={overview?.dummy_mode ? "bad" : "good"} />
             </div>
 
-            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <div className="mt-4 grid gap-4 xl:grid-cols-2">
               <div className="border-2 border-black bg-cream p-4">
                 <div className="text-[10px] font-black uppercase tracking-[0.18em] text-black/55">Collections</div>
                 <div className="mt-3 space-y-3">
@@ -192,7 +192,7 @@ export default function UsageDashboard() {
                         <div className="mt-2 text-xs font-bold leading-5 text-black/80">
                           <span className="font-black uppercase text-black/55">Question:</span> {trace.question}
                         </div>
-                        <div className="mt-3 grid gap-3 xl:grid-cols-2">
+                        <div className="mt-3 grid gap-3 2xl:grid-cols-2">
                           <div>
                             <div className="text-[10px] font-black uppercase tracking-[0.16em] text-black/55">Reranked Character Arcs</div>
                             <div className="mt-2 space-y-2">
@@ -248,7 +248,7 @@ export default function UsageDashboard() {
           </div>
         </section>
 
-        <section className="grid min-h-0 grid-rows-[auto_auto_1fr] border-4 border-black bg-white shadow-hard-sm">
+        <section className="grid h-full min-h-[28rem] min-h-0 grid-rows-[auto_auto_1fr] border-4 border-black bg-white shadow-hard-sm lg:min-h-0">
           <div className="border-b-4 border-black bg-[#f8d58a] px-4 py-3">
             <div className="font-black uppercase tracking-[0.18em]">Live Model Usage</div>
           </div>

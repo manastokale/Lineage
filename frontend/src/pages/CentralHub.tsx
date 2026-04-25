@@ -103,12 +103,16 @@ export default function CentralHub() {
   const [selectedLine, setSelectedLine] = useState<SelectedLine | null>(null)
   const [openScenes, setOpenScenes] = useState<Record<string, boolean>>({})
   const [writerInfoOpen, setWriterInfoOpen] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
+  const [mobileLensOpen, setMobileLensOpen] = useState(false)
+  const [mobileCastOpen, setMobileCastOpen] = useState(false)
   const scriptScrollRef = useRef<HTMLDivElement>(null)
   const askScrollRef = useRef<HTMLDivElement>(null)
   const askInputRef = useRef<HTMLInputElement>(null)
   const sceneAnchorRefs = useRef<Record<string, HTMLElement | null>>({})
   const lineAnchorRefs = useRef<Record<number, HTMLButtonElement | null>>({})
   const [sceneInViewId, setSceneInViewId] = useState("")
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
 
   const scriptTimeline = useMemo(() => {
     if (!episode?.scenes?.length) return [] as TimelineEntry[]
@@ -234,6 +238,13 @@ export default function CentralHub() {
   )
 
   useEffect(() => {
+    const syncViewport = () => setIsMobileViewport(window.innerWidth < 768)
+    syncViewport()
+    window.addEventListener("resize", syncViewport)
+    return () => window.removeEventListener("resize", syncViewport)
+  }, [])
+
+  useEffect(() => {
     if (!activeEpisodeId) return
     let cancelled = false
     const loadEpisode = async () => {
@@ -244,6 +255,8 @@ export default function CentralHub() {
         setExpandedCastName(null)
         setCastProfiles({})
         setSceneInViewId("")
+        setMobileCastOpen(false)
+        setMobileLensOpen(false)
         const nextEpisode = await fetchEpisode(activeEpisodeId)
         if (cancelled) return
         setEpisode(nextEpisode)
@@ -531,7 +544,7 @@ export default function CentralHub() {
     setSeasonMenuOpen(false)
   }
 
-  const sidebarCastPane = (
+  const castPaneContent = (
     <section className="grid h-full min-h-0 grid-rows-[auto_1fr] overflow-hidden bg-white">
       <div className="border-b-4 border-black bg-accent px-4 py-3">
         <div className="font-black uppercase tracking-[0.18em]">Episode Cast</div>
@@ -595,9 +608,128 @@ export default function CentralHub() {
     </section>
   )
 
+  const sidebarCastPane = <div className="h-full">{castPaneContent}</div>
+
+  const characterLensPaneContent = (
+    <section className="grid h-full min-h-0 grid-rows-[auto_auto_1fr_auto] border-4 border-black bg-white shadow-hard-sm">
+      <div className="relative border-b-4 border-black bg-primary px-4 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="font-black uppercase tracking-[0.18em]">Character Lens</div>
+          <button
+            type="button"
+            aria-label="Show Character Lens guidance"
+            onClick={() => setWriterInfoOpen((current) => !current)}
+            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-white text-sm font-black text-black shadow-hard-xs"
+          >
+            i
+          </button>
+        </div>
+        {writerInfoOpen ? (
+          <div className="absolute right-4 top-[calc(100%+0.75rem)] z-20 w-80 max-w-[calc(100vw-2rem)] border-4 border-black bg-white p-4 shadow-hard">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-black/60">Writer Lens</div>
+                <div className="mt-2 text-sm font-bold leading-6 text-black/75">
+                  Use Character Lens to pressure-test what each character can truthfully know at this exact script moment.
+                </div>
+                <div className="mt-3 text-sm font-bold leading-6 text-black/75">
+                  Ask the selected speaker directly, or use <span className="font-black">@mentions</span> to compare perspectives from the same point in time.
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label="Close Character Lens guidance"
+                onClick={() => setWriterInfoOpen(false)}
+                className="shrink-0 border-2 border-black bg-black px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <div className="border-b-2 border-black bg-cream px-4 py-3">
+        {selectedLine ? (
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.18em] text-black/60">{selectedLine.sceneLabel}</div>
+            <div className="mt-2 text-sm font-bold leading-6 text-black/75">
+              Asking from <span style={{ color: CHARACTER_COLORS[selectedLine.speaker] || "#111827" }}>{selectedLine.speaker}</span>'s selected line.
+            </div>
+          </div>
+        ) : (
+          <div className="text-sm font-bold text-black/60">Select a line in the script to ask from that exact point in time.</div>
+        )}
+      </div>
+
+      <div ref={askScrollRef} className="min-h-0 overflow-y-auto bg-[#f3f8ff] p-4">
+        {askMessages.length ? (
+          <div className="flex flex-col gap-3">
+            {askMessages.map((message) => (
+              <div key={message.id} className={`flex ${message.kind === "user" ? "justify-end" : "justify-start"}`}>
+                <div className="max-w-full border-2 border-[#60a5fa] bg-[#dbeafe] p-3 text-left text-[#0f172a] sm:max-w-[88%]">
+                  <div className="text-xs font-black uppercase" style={{ color: message.kind === "user" ? "#0f172a" : CHARACTER_COLORS[message.speaker] || "#111827" }}>
+                    {message.speaker}
+                  </div>
+                  <div className="mt-1 whitespace-pre-wrap font-bold">{message.text}</div>
+                  {message.kind === "reply" && message.references?.length ? (
+                    <div className="mt-3 border-t border-[#60a5fa] pt-3">
+                      <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[#1e3a8a]/70">Referenced Memory</div>
+                      <div className="mt-2 flex flex-col gap-2">
+                        {message.references.map((reference, index) => (
+                          <div key={`${message.id}-${reference.episode_id}-${reference.kind}-${index}`} className="border border-[#60a5fa]/40 bg-white/65 px-2 py-2 text-xs font-bold leading-5 text-[#0f172a]/80">
+                            <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[#1e3a8a]/65">
+                              {reference.episode_id.toUpperCase()} · {reference.kind === "interaction_arc" ? "Interaction" : "Character Arc"}
+                            </div>
+                            <div className="mt-1">{reference.title}</div>
+                            {reference.kind === "interaction_arc" && reference.participants?.length ? (
+                              <div className="mt-1 text-[11px] font-black uppercase tracking-[0.12em] text-[#1e3a8a]/60">
+                                {reference.participants.join(" / ")}
+                              </div>
+                            ) : null}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-sm font-bold leading-6 text-black/55">
+            Click any dialogue line in the screenplay, then ask that speaker directly, or use @mentions to ask someone else from the same point in the script.
+          </div>
+        )}
+      </div>
+
+      <div className="border-t-4 border-black bg-primary p-3">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <input
+            ref={askInputRef}
+            value={askText}
+            onChange={(event) => setAskText(event.target.value)}
+            maxLength={700}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault()
+                void handleAsk()
+              }
+            }}
+            className="min-w-0 flex-1 border-2 border-black bg-cream px-3 py-2 font-bold"
+            placeholder={selectedLine ? `Ask ${selectedLine.speaker} from this moment…` : "@ross what are you thinking?"}
+          />
+          <button onClick={() => void handleAsk()} className="border-2 border-black bg-black px-4 py-2 font-black uppercase text-white sm:shrink-0">
+            Ask
+          </button>
+        </div>
+        {askError ? <div className="mt-2 text-xs font-black uppercase text-red-700">{askError}</div> : null}
+      </div>
+    </section>
+  )
+
   const headerPane = (
-    <div className="flex w-full items-center justify-between gap-3">
-      <div className="flex items-start gap-3">
+    <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-wrap items-start gap-3">
         <div className="relative">
           <button
             onClick={() => setSeasonMenuOpen((value) => !value)}
@@ -623,15 +755,17 @@ export default function CentralHub() {
         <div className="relative">
           <button
             onClick={() => setEpisodeMenuOpen((value) => !value)}
-            className="border-2 border-black bg-black px-4 py-3 text-left text-white shadow-hard-xs"
+            className="max-w-full border-2 border-black bg-black px-4 py-3 text-left text-white shadow-hard-xs"
           >
             <div className="text-[10px] font-black uppercase tracking-[0.25em] text-white/70">
               {episode?.episode_id?.toUpperCase() || "EPISODE"}
             </div>
-            <div className="mt-1 text-base font-black uppercase md:text-lg">{episode?.title || "Loading…"}</div>
+            <div className="mt-1 max-w-[16rem] truncate text-base font-black uppercase md:max-w-[24rem] md:text-lg">
+              {episode?.title || "Loading…"}
+            </div>
           </button>
           {episodeMenuOpen ? (
-            <div className="absolute left-0 top-full z-30 mt-2 max-h-80 w-[22rem] overflow-y-auto border-4 border-black bg-white shadow-hard">
+            <div className="absolute left-0 top-full z-30 mt-2 max-h-80 w-[min(22rem,calc(100vw-2rem))] overflow-y-auto border-4 border-black bg-white shadow-hard">
               {seasonEpisodes.map((item) => (
                 <button
                   key={item.episode_id}
@@ -648,7 +782,7 @@ export default function CentralHub() {
           ) : null}
         </div>
       </div>
-      <div className="ml-auto border-2 border-black bg-white px-4 py-3 text-right shadow-hard-xs">
+      <div className="border-2 border-black bg-white px-4 py-3 text-left shadow-hard-xs lg:ml-auto lg:text-right">
         <div className="text-[10px] font-black uppercase tracking-[0.25em] text-black/60">View</div>
         <div className="mt-1 text-base font-black uppercase md:text-lg">Screenplay</div>
       </div>
@@ -657,28 +791,70 @@ export default function CentralHub() {
 
   return (
     <Layout headerContent={headerPane} sidebarExtra={sidebarCastPane}>
-      <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[minmax(0,1fr)_420px]">
-        <section className="grid min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm">
-          <div className="flex items-center justify-between gap-4 border-b-4 border-black bg-accent px-4 py-3">
+      <div
+        className="grid h-full min-h-0 gap-4 overflow-y-auto xl:grid-cols-[minmax(0,1fr)_420px] xl:overflow-hidden"
+        onTouchStart={(event) => {
+          if (!isMobileViewport) return
+          const touch = event.changedTouches[0]
+          touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+        }}
+        onTouchEnd={(event) => {
+          if (!isMobileViewport || !touchStartRef.current) return
+          const touch = event.changedTouches[0]
+          const deltaX = touch.clientX - touchStartRef.current.x
+          const deltaY = touch.clientY - touchStartRef.current.y
+          touchStartRef.current = null
+          if (Math.abs(deltaX) < 70 || Math.abs(deltaY) > 50) return
+          if (deltaX > 0) {
+            setMobileCastOpen(false)
+            setMobileLensOpen((current) => !current)
+            return
+          }
+          setMobileLensOpen(false)
+          setMobileCastOpen((current) => !current)
+        }}
+      >
+        <section className="grid h-full min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
+          <div className="flex flex-col gap-3 border-b-4 border-black bg-accent px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
             <div className="font-black uppercase tracking-[0.18em]">Episode Script</div>
-            <div className="flex flex-wrap items-center justify-end gap-2">
+            <div className="flex flex-wrap items-center gap-2 lg:justify-end">
               <div className="text-[11px] font-black uppercase tracking-[0.18em] text-black/60">
                 {(scriptScenes.reduce((sum, scene) => sum + scene.lines.length, 0) || 0).toString()} lines
               </div>
-              <span className="border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
+              <span className="hidden md:inline-flex border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
                 Up/Down Move Lines
               </span>
-              <span className="border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
+              <span className="hidden md:inline-flex border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
                 Shift+Up/Down Jump Scenes
               </span>
-              <span className="border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
+              <span className="hidden md:inline-flex border border-black/20 bg-white/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-black/60">
                 Enter Focus Ask
               </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileCastOpen((current) => !current)
+                  setMobileLensOpen(false)
+                }}
+                className="border border-black bg-white px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] md:hidden"
+              >
+                Cast
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileLensOpen((current) => !current)
+                  setMobileCastOpen(false)
+                }}
+                className="border border-black bg-white px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] md:hidden"
+              >
+                Lens
+              </button>
             </div>
           </div>
 
-          <div className="grid min-h-0 grid-cols-[260px_minmax(0,1fr)] bg-[#f8f2e7]">
-            <aside className="min-h-0 border-r-4 border-black bg-[#efe5d4] p-3">
+          <div className="grid min-h-0 grid-cols-1 bg-[#f8f2e7] md:grid-cols-[240px_minmax(0,1fr)]">
+            <aside className="hidden min-h-0 border-b-4 border-black bg-[#efe5d4] p-3 md:block md:border-b-0 md:border-r-4">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <div className="text-[11px] font-black uppercase tracking-[0.18em] text-black/60">Scene Outline</div>
                 <button
@@ -694,7 +870,7 @@ export default function CentralHub() {
                   Collapse
                 </button>
               </div>
-              <div className="flex h-[calc(100%-2rem)] min-h-0 flex-col gap-2 overflow-y-auto pr-1">
+              <div className="flex max-h-56 min-h-0 flex-col gap-2 overflow-y-auto pr-1 md:h-[calc(100%-2rem)] md:max-h-none">
                 {scriptScenes.map((scene, index) => {
                   const active = sceneInViewId === scene.sceneId
                   const expanded = openScenes[scene.sceneId] !== false
@@ -720,7 +896,7 @@ export default function CentralHub() {
               </div>
             </aside>
 
-            <div ref={scriptScrollRef} className="relative min-h-0 overflow-y-auto p-5">
+            <div ref={scriptScrollRef} className="relative min-h-0 max-h-[70vh] overflow-y-auto p-4 sm:p-5 md:max-h-none">
               <div className="mx-auto flex max-w-4xl flex-col gap-8">
                 {scriptScenes.map((scene) => {
                   const expanded = openScenes[scene.sceneId] !== false
@@ -766,6 +942,10 @@ export default function CentralHub() {
                                     text: line.text,
                                     sceneLabel: scene.label,
                                   })
+                                  if (isMobileViewport) {
+                                    setMobileCastOpen(false)
+                                    setMobileLensOpen(true)
+                                  }
                                 }}
                                 className={`w-full rounded-sm border-2 px-4 py-3 text-left transition ${
                                   isSelected
@@ -773,12 +953,12 @@ export default function CentralHub() {
                                     : "border-transparent bg-white/55 hover:border-black/30 hover:bg-white/80"
                                 }`}
                               >
-                                <div className="flex items-start gap-4">
-                                  <div className="w-32 shrink-0 font-mono text-xs font-black uppercase tracking-[0.16em]" style={{ color: CHARACTER_COLORS[line.speaker] || "#111827" }}>
+                                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
+                                  <div className="w-full shrink-0 font-mono text-xs font-black uppercase tracking-[0.16em] sm:w-32" style={{ color: CHARACTER_COLORS[line.speaker] || "#111827" }}>
                                     {line.speaker}
                                   </div>
                                   <div className="min-w-0 flex-1">
-                                    <div className="whitespace-pre-wrap text-[16px] font-bold leading-7 text-black">{line.text}</div>
+                                    <div className="whitespace-pre-wrap text-[15px] font-bold leading-7 text-black sm:text-[16px]">{line.text}</div>
                                     {line.stage_direction ? (
                                       <div className="mt-2 text-xs italic text-black/55">{line.stage_direction}</div>
                                     ) : null}
@@ -810,122 +990,35 @@ export default function CentralHub() {
           </div>
         </section>
 
-        <aside className="min-h-0 overflow-hidden">
-          <section className="grid h-full min-h-0 grid-rows-[auto_auto_1fr_auto] border-4 border-black bg-white shadow-hard-sm">
-            <div className="relative border-b-4 border-black bg-primary px-4 py-3">
-              <div className="flex items-center justify-between gap-3">
-                <div className="font-black uppercase tracking-[0.18em]">Character Lens</div>
-                <button
-                  type="button"
-                  aria-label="Show Character Lens guidance"
-                  onClick={() => setWriterInfoOpen((current) => !current)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-white text-sm font-black text-black shadow-hard-xs"
-                >
-                  i
-                </button>
-              </div>
-              {writerInfoOpen ? (
-                <div className="absolute right-4 top-[calc(100%+0.75rem)] z-20 w-80 border-4 border-black bg-white p-4 shadow-hard">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="text-[10px] font-black uppercase tracking-[0.18em] text-black/60">Writer Lens</div>
-                      <div className="mt-2 text-sm font-bold leading-6 text-black/75">
-                        Use Character Lens to pressure-test what each character can truthfully know at this exact script moment.
-                      </div>
-                      <div className="mt-3 text-sm font-bold leading-6 text-black/75">
-                        Ask the selected speaker directly, or use <span className="font-black">@mentions</span> to compare perspectives from the same point in time.
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      aria-label="Close Character Lens guidance"
-                      onClick={() => setWriterInfoOpen(false)}
-                      className="shrink-0 border-2 border-black bg-black px-2 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            <div className="border-b-2 border-black bg-cream px-4 py-3">
-              {selectedLine ? (
-                <div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.18em] text-black/60">{selectedLine.sceneLabel}</div>
-                  <div className="mt-2 text-sm font-bold leading-6 text-black/75">
-                    Asking from <span style={{ color: CHARACTER_COLORS[selectedLine.speaker] || "#111827" }}>{selectedLine.speaker}</span>'s selected line.
-                  </div>
-                </div>
-              ) : (
-                <div className="text-sm font-bold text-black/60">Select a line in the script to ask from that exact point in time.</div>
-              )}
-            </div>
+        <div className="min-h-[20rem] overflow-hidden border-4 border-black bg-white shadow-hard-sm md:hidden">
+          {castPaneContent}
+        </div>
 
-            <div ref={askScrollRef} className="min-h-0 overflow-y-auto bg-[#f3f8ff] p-4">
-              {askMessages.length ? (
-                <div className="flex flex-col gap-3">
-                  {askMessages.map((message) => (
-                    <div key={message.id} className={`flex ${message.kind === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className="max-w-[88%] border-2 border-[#60a5fa] bg-[#dbeafe] p-3 text-left text-[#0f172a]">
-                        <div className="text-xs font-black uppercase" style={{ color: message.kind === "user" ? "#0f172a" : CHARACTER_COLORS[message.speaker] || "#111827" }}>
-                          {message.speaker}
-                        </div>
-                        <div className="mt-1 whitespace-pre-wrap font-bold">{message.text}</div>
-                        {message.kind === "reply" && message.references?.length ? (
-                          <div className="mt-3 border-t border-[#60a5fa] pt-3">
-                            <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[#1e3a8a]/70">Referenced Memory</div>
-                            <div className="mt-2 flex flex-col gap-2">
-                              {message.references.map((reference, index) => (
-                                <div key={`${message.id}-${reference.episode_id}-${reference.kind}-${index}`} className="border border-[#60a5fa]/40 bg-white/65 px-2 py-2 text-xs font-bold leading-5 text-[#0f172a]/80">
-                                  <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[#1e3a8a]/65">
-                                    {reference.episode_id.toUpperCase()} · {reference.kind === "interaction_arc" ? "Interaction" : "Character Arc"}
-                                  </div>
-                                  <div className="mt-1">{reference.title}</div>
-                                  {reference.kind === "interaction_arc" && reference.participants?.length ? (
-                                    <div className="mt-1 text-[11px] font-black uppercase tracking-[0.12em] text-[#1e3a8a]/60">
-                                      {reference.participants.join(" / ")}
-                                    </div>
-                                  ) : null}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-sm font-bold leading-6 text-black/55">
-                  Click any dialogue line in the screenplay, then ask that speaker directly, or use @mentions to ask someone else from the same point in the script.
-                </div>
-              )}
-            </div>
-
-            <div className="border-t-4 border-black bg-primary p-3">
-              <div className="flex gap-2">
-                <input
-                  ref={askInputRef}
-                  value={askText}
-                  onChange={(event) => setAskText(event.target.value)}
-                  maxLength={700}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      event.preventDefault()
-                      void handleAsk()
-                    }
-                  }}
-                  className="min-w-0 flex-1 border-2 border-black bg-cream px-3 py-2 font-bold"
-                  placeholder={selectedLine ? `Ask ${selectedLine.speaker} from this moment…` : "@ross what are you thinking?"}
-                />
-                <button onClick={() => void handleAsk()} className="border-2 border-black bg-black px-4 py-2 font-black uppercase text-white">
-                  Ask
-                </button>
-              </div>
-              {askError ? <div className="mt-2 text-xs font-black uppercase text-red-700">{askError}</div> : null}
-            </div>
-          </section>
+        <aside className="hidden min-h-0 overflow-hidden md:block">
+          {characterLensPaneContent}
         </aside>
+      </div>
+
+      <div className={`fixed inset-0 z-40 bg-black/25 transition-opacity md:hidden ${mobileCastOpen || mobileLensOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
+        <button
+          type="button"
+          aria-label="Close mobile panels"
+          className="absolute inset-0"
+          onClick={() => {
+            setMobileCastOpen(false)
+            setMobileLensOpen(false)
+          }}
+        />
+        <div className={`absolute inset-y-0 left-0 w-[88vw] max-w-sm transform transition-transform ${mobileCastOpen ? "translate-x-0" : "-translate-x-full"}`}>
+          <div className="h-full border-r-4 border-black bg-white shadow-hard">
+            {castPaneContent}
+          </div>
+        </div>
+        <div className={`absolute inset-y-0 right-0 w-[92vw] max-w-md transform transition-transform ${mobileLensOpen ? "translate-x-0" : "translate-x-full"}`}>
+          <div className="h-full bg-white shadow-hard">
+            {characterLensPaneContent}
+          </div>
+        </div>
       </div>
     </Layout>
   )

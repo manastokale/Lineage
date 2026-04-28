@@ -314,6 +314,12 @@ export default function CentralHub() {
     if (tooHigh || tooLow) {
       lineNode.scrollIntoView({ block: "center", behavior: "smooth" })
     }
+    const active = document.activeElement as HTMLElement | null
+    const isTypingTarget =
+      active?.tagName?.toLowerCase() === "input" || active?.tagName?.toLowerCase() === "textarea" || active?.isContentEditable
+    if (!isTypingTarget && active !== lineNode) {
+      lineNode.focus({ preventScroll: true })
+    }
     setSceneInViewId(selectedLine.scene_id)
   }, [selectedLine])
 
@@ -335,8 +341,9 @@ export default function CentralHub() {
       if (!flatLines.length) return
 
       const isInsideScriptPanel = Boolean(target && scriptPanelRef.current?.contains(target))
+      const isLineButton = target?.getAttribute("data-line-button") === "true"
 
-      if (event.key === "Enter" && isInsideScriptPanel) {
+      if (event.key === "Enter" && (isLineButton || isInsideScriptPanel)) {
         event.preventDefault()
         focusAskInput()
         return
@@ -805,7 +812,7 @@ export default function CentralHub() {
   return (
     <Layout headerContent={headerPane} sidebarExtra={sidebarCastPane}>
       <div
-        className="grid h-full min-h-0 gap-4 overflow-y-auto overflow-x-hidden xl:grid-cols-[minmax(0,1fr)_420px]"
+        className="grid min-h-0 gap-4 overflow-visible xl:grid-cols-[minmax(0,1fr)_420px]"
         onTouchStart={(event) => {
           if (!isMobileViewport) return
           const touch = event.changedTouches[0]
@@ -827,7 +834,7 @@ export default function CentralHub() {
           setMobileCastOpen((current) => !current)
         }}
       >
-        <section ref={scriptPanelRef} className="grid h-full min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
+        <section ref={scriptPanelRef} className="grid min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm">
           <div className="flex flex-col gap-3 border-b-4 border-black bg-accent px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
             <div className="font-black uppercase tracking-[0.18em]">Episode Script</div>
             <div className="flex flex-wrap items-center gap-2 lg:justify-end">
@@ -943,8 +950,15 @@ export default function CentralHub() {
                             return (
                               <button
                                 key={line.key}
+                                data-line-button="true"
                                 ref={(node) => {
                                   lineAnchorRefs.current[line.lineIndex] = node
+                                }}
+                                onKeyDown={(event) => {
+                                  if (event.key === "Enter") {
+                                    event.preventDefault()
+                                    focusAskInput()
+                                  }
                                 }}
                                 onClick={() => {
                                   setOpenScenes((current) => ({ ...current, [scene.sceneId]: true }))

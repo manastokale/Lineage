@@ -17,8 +17,8 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
   ]
 
   return (
-    <div className="min-h-screen bg-cream text-ink md:h-screen md:overflow-hidden">
-      <div className="flex min-h-screen flex-col md:h-full md:min-h-0 md:flex-row md:overflow-hidden">
+    <div className="min-h-screen bg-cream text-ink">
+      <div className="flex min-h-screen flex-col md:min-h-screen md:flex-row">
         <aside className="hidden w-56 shrink-0 flex-col border-r-4 border-black bg-white md:flex">
           <div className="flex h-[93px] items-center border-b-4 border-black bg-accent px-5 py-6">
             <button onClick={() => navigate("/")} className="w-full text-left">
@@ -80,7 +80,7 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
               </nav>
             </div>
           </header>
-          <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-6">{children}</main>
+          <main className="min-h-0 flex-1 overflow-visible p-3 sm:p-4 md:p-6">{children}</main>
         </div>
       </div>
     </div>

@@ -80,7 +80,7 @@ export default function Layout({ children, headerContent, sidebarExtra }: Layout
               </nav>
             </div>
           </header>
-          <main className="min-h-0 flex-1 overflow-hidden p-3 sm:p-4 md:p-6">{children}</main>
+          <main className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-6">{children}</main>
         </div>
       </div>
     </div>

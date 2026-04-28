@@ -107,6 +107,7 @@ export default function CentralHub() {
   const [mobileLensOpen, setMobileLensOpen] = useState(false)
   const [mobileCastOpen, setMobileCastOpen] = useState(false)
   const scriptScrollRef = useRef<HTMLDivElement>(null)
+  const scriptPanelRef = useRef<HTMLElement>(null)
   const askScrollRef = useRef<HTMLDivElement>(null)
   const askInputRef = useRef<HTMLInputElement>(null)
   const sceneAnchorRefs = useRef<Record<string, HTMLElement | null>>({})
@@ -316,6 +317,16 @@ export default function CentralHub() {
     setSceneInViewId(selectedLine.scene_id)
   }, [selectedLine])
 
+  const focusAskInput = () => {
+    if (isMobileViewport) {
+      setMobileCastOpen(false)
+      setMobileLensOpen(true)
+    }
+    requestAnimationFrame(() => {
+      askInputRef.current?.focus()
+    })
+  }
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null
@@ -323,9 +334,11 @@ export default function CentralHub() {
       if (tagName === "input" || tagName === "textarea" || target?.isContentEditable) return
       if (!flatLines.length) return
 
-      if (event.key === "Enter") {
+      const isInsideScriptPanel = Boolean(target && scriptPanelRef.current?.contains(target))
+
+      if (event.key === "Enter" && isInsideScriptPanel) {
         event.preventDefault()
-        askInputRef.current?.focus()
+        focusAskInput()
         return
       }
 
@@ -373,9 +386,9 @@ export default function CentralHub() {
       })
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [flatLines, sceneIndexById, scriptScenes, selectedLine])
+    window.addEventListener("keydown", onKeyDown, true)
+    return () => window.removeEventListener("keydown", onKeyDown, true)
+  }, [flatLines, isMobileViewport, sceneIndexById, scriptScenes, selectedLine])
 
   useEffect(() => {
     if (!activeEpisodeId || !expandedCastName || castProfiles[expandedCastName] !== undefined) return
@@ -792,7 +805,7 @@ export default function CentralHub() {
   return (
     <Layout headerContent={headerPane} sidebarExtra={sidebarCastPane}>
       <div
-        className="grid h-full min-h-0 gap-4 overflow-y-auto xl:grid-cols-[minmax(0,1fr)_420px] xl:overflow-hidden"
+        className="grid h-full min-h-0 gap-4 overflow-y-auto overflow-x-hidden xl:grid-cols-[minmax(0,1fr)_420px]"
         onTouchStart={(event) => {
           if (!isMobileViewport) return
           const touch = event.changedTouches[0]
@@ -814,7 +827,7 @@ export default function CentralHub() {
           setMobileCastOpen((current) => !current)
         }}
       >
-        <section className="grid h-full min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
+        <section ref={scriptPanelRef} className="grid h-full min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm xl:min-h-0">
           <div className="flex flex-col gap-3 border-b-4 border-black bg-accent px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
             <div className="font-black uppercase tracking-[0.18em]">Episode Script</div>
             <div className="flex flex-wrap items-center gap-2 lg:justify-end">

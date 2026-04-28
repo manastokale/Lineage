@@ -121,8 +121,8 @@
             "text": "Ross and Rachel left us a message saying they were getting married! Isn’t that why you guys are here?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -508,7 +508,7 @@
             "text": "Look, I just don’t think Monica and I are ready to get married yet! Y’know? I mean, I love her and everything but seeing Ross and Rachel coming out of that chapel was like a, like a wake-up call that Monica and I are moving so fast. Y’know? And, how do I tell her without crushing her?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
+              "Ross",
               "Monica"
             ],
             "stage_direction": ""
@@ -2404,8 +2404,8 @@
             "text": "No-o-o! No? No-o-o! Look Joey, here’s the thing, Monica and I have decided to live together, here. So, I’m gonna be moving out man.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Monica"
+              "Monica",
+              "Joey"
             ],
             "stage_direction": "To Monica She nods no."
           },
@@ -2722,8 +2722,8 @@
             "text": "I just tell her, I have to get it over with. I told Ross and Phoebe and she’s the only one left!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -2966,8 +2966,8 @@
             "text": "This is crazy! I mean, yes-yes Rachel is my good friend and I-I have loved her in the past, but now , she is just my wife! Phoebe, will you-will you help me out here?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -3508,8 +3508,8 @@
             "text": "Of course you did. Look Ross, you can’t get an annulment unless you and Rachel are both there.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -3855,8 +3855,8 @@
             "text": "Monica and Chandler are really moving in here and I have to move out and everything is changing.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -3901,8 +3901,8 @@
             "text": "So, Ross and Rachel got married, Monica and Chandler almost got married, do you think you and I should hook up?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Chandler"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -3925,8 +3925,8 @@
             "text": "Okay umm, well, first Chandler and Monica will get married and be filthy rich by the way. Yeah. But it won’t work out.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -5073,8 +5073,8 @@
             "text": "Oh thanks, but listen, I was just at Monica’s and she and Chandler had a big fight and they’re not moving in.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -5198,8 +5198,8 @@
             "text": "Okay! All right! Now, Chandler you-you wanna live with Monica, right?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -5302,8 +5302,8 @@
             "text": "You’re never gonna believe it uh, Monica and Chandler are moving in again. That’s great news right—I mean for them. Right?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -5660,8 +5660,8 @@
             "text": "Umm, well let’s see Monica and Chandler are occupied.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -5719,8 +5719,8 @@
             "text": "Umm, listen, Ross do you really think this moving in with Rachel is a good idea?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -7860,8 +7860,8 @@
             "text": "Yeah! Yeah! Yeah! You just take a big, big swing. Now, don’t hold back. and Phoebe picks up a wooden baseball bat and starts to swing as Chandler and Monica enter.)",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Chandler"
+              "Monica",
+              "Phoebe"
             ],
             "stage_direction": "He dons his protective helmet (Why, I have no clue."
           },
@@ -10010,8 +10010,8 @@
             "text": "Well, instead of being sad that tonight is my last night together with Rachel we thought we’d go out to dinner and celebrate the fact that Rachel is moving in with Phoebe.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -10137,8 +10137,8 @@
             "text": "Of course I packed! Monica relax! I just wanted to ask Phoebe her opinion on what I should wear tonight.",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Monica"
+              "Monica",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -10237,8 +10237,8 @@
             "text": "All right, Chandler can make boxes, Ross can wrap, and Joey can lift things. Now Phoebe, go tell the guys they have to help out!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Chandler"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -10576,8 +10576,8 @@
             "text": "Good that’s a good one. Okay, Monica, anything? Y’know? Does Rachel move the phone pen?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Monica"
+              "Monica",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -11321,8 +11321,8 @@
             "text": "Whoa-whoa-whoa, Phoebe you gotta take her! Y’know I-I-I said some really bad stuff about her, but y’know Rachel has some good qualities that make her a good roommate.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -11433,8 +11433,8 @@
             "text": "Okay Rachel, I can’t wait to live with you! And you know what we should do? Bring Monica and then we could all live there together! We’ll have so much fun!!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Monica"
+              "Monica",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -12937,8 +12937,8 @@
             "text": "Look Chandler, Monica is really weird about this kind stuff all right. Believe me, I lived with her for 16 years. She is going to freak…out. Oh my God, she's going to sit on you.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -14326,8 +14326,8 @@
             "text": "Wow, that sounds great! And what are you making Monica, in case Rachel’s dessert is...[about to say “bad”] so good that I eat all of it. There’s none left for anybody else!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Monica"
+              "Monica",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -14653,8 +14653,8 @@
             "text": "Yeah, I dreamt that he saved me from a burning building and he was so brave and so strong! And it’s making me look at him totally differently. Y’know, I mean he used to be just, y’know “Jack Geller Monica and Ross’s dad” and now he’s he’s “Jack Geller, dream hunk.\"",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -14670,8 +14670,8 @@
             "text": "Y’know dad, Chandler is one of Ross’s very best friends!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -14726,8 +14726,8 @@
             "text": "It’s a truffle. It’s got all of these layers. First there’s a layer of ladyfingers, then a layer of jam, then custard, which I made from scratch, [Joey and Ross make impressed faces] then raspberries, more ladyfingers, then beef sauteed with peas and onions, [Joey and Ross look like something’s wrong.] then a little more custard, and then bananas, and then I just put some whipped cream on top!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -14916,8 +14916,8 @@
             "text": "Oh, yes. Well it’s very beautiful. It’s cream-colored and tight [Realizes what he just said and looks worried. Monica and Ross also looked shocked. Judy and Jack give Chandler a very dirty look.] I don’t mean tight, I mean it’s not too tight, not that I was looking at-[giving up all hope, he puts his head into his hands.]",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -15770,8 +15770,8 @@
             "text": "Monica and Chandler are living together!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -15780,8 +15780,8 @@
             "text": "Ross married Rachel in Vegas! And got divorced! Again!!!!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -15811,7 +15811,7 @@
             "text": "That’s alot of information to get in in thirty seconds! Alright Joey, if wanna leave, just leave. Rachel, no you weren’t supposed to put beef in the trifle. It did not taste good. Phoebe, I’m sorry, but I think Jacques Cousteau is dead. Monica, why you felt you had to hide the fact that you were in an important relationship is beyond me.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
+              "Monica",
               "Phoebe"
             ],
             "stage_direction": "rubbing her temples Phoebe makes a sad face."
@@ -15851,7 +15851,7 @@
             "text": "Chandler! You’ve been Ross’s best friend all these years, stuck by him during the drug problems. And now you’ve taken on Monica as well. Well, I don’t know what to say. You’re a wonderful human being.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
+              "Ross",
               "Monica"
             ],
             "stage_direction": "Ross gets disgusted."
@@ -15868,8 +15868,8 @@
             "text": "No! Thank you! Monica, and Ross! I don’t know what I’m gonna do about the two of you!",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": "Hugs Chandler"
           },
@@ -16615,8 +16615,8 @@
             "text": "Chandler, aren’t you worried about what to get Monica for Christmas?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -18473,8 +18473,8 @@
             "text": "What-what’s wrong with Monica and Chandler?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -18772,8 +18772,8 @@
             "text": "Ross! Phoebe’s gonna be here any second, she cannot see this!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -19019,8 +19019,8 @@
             "text": "Monica! Chandler! I’m really-really sorry about tonight. I don’t know if Joey told you; I just couldn’t get out of going to this play. I’m sorry. Have a great time.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Joey"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "entering from her room"
           },
@@ -19563,8 +19563,8 @@
             "text": "Yeah no, I’m telling you Rachel has such a great eye for this stuff. Ross, y’know if you ever decide you need to redecorate—And I think that you should. You should, you should ask Rachel to help.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -20912,8 +20912,8 @@
             "text": "It’s wrong. You know what else is wrong? Phoebe picking Rachel.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -20922,8 +20922,8 @@
             "text": "You know who else picked Rachel? Ross, and you know what else Ross did? He stole my joke. You know what? I’m going to get a joke journal. Y’know? And document the date and time of every single one of my jokes.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -21987,8 +21987,8 @@
             "text": "Hey, it’s Phoebe and Rachel. Um, why don’t you tell them what you were telling me earlier about me not being high maintenance?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           }
@@ -22163,8 +22163,8 @@
             "text": "Joey, you can’t let him get away with that. Ya know what, I’m not going to let him get away with that. I’m going to say something to him—No, I really shouldn’t say anything—No, I should say something to him. Gunther, I want you to give Joey his job back. That is really not fair that you have to fire him…",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Gunther"
+              "Gunther",
+              "Joey"
             ],
             "stage_direction": "Goes to the counter"
           },
@@ -22336,8 +22336,8 @@
             "text": "Okay Rach, that muffin and espresso, $4.50. Ross, double latte, $2.75. Chandler, coffee and a scone, $4.25. And Pheebs, herbal tea, $1.25. So, all together that’s $12.75.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": "pauses to figure the total"
           },
@@ -22650,8 +22650,8 @@
             "text": "And you know Monica and Ross!",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -24483,8 +24483,8 @@
             "text": "I can’t believe Ross went out with Rachel’s sister! When Chandler made out with my sister I was mad at him for 10 years.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Chandler"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -28122,8 +28122,8 @@
             "text": "Hey! Hey Chandler look, I know you’re mad, but I just want to say I’m sorry. I-I was a total jerk. Completely o-over the line. Uh, I just I hate pulp! Y’know? I mean, y’know how Monica feels about low fat mayonnaise?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "entering"
           },
@@ -29830,8 +29830,8 @@
             "text": "Well uh, look Ross I uh, I think Carol’s great and I’m sure you’re a very attractive man, but I….",
             "emotion_tags": [],
             "addressed_to": [
-              "Carol",
-              "Ross"
+              "Ross",
+              "Carol"
             ],
             "stage_direction": "not quite sure of how to answer that"
           },
@@ -32380,8 +32380,8 @@
             "text": "Hey! Hey Chandler look, I know you’re mad, but I just want to say I’m sorry. I-I was a total jerk. Completely o-over the line. Uh, I just I hate pulp! Y’know? I mean, y’know how Monica feels about low fat mayonnaise?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "entering"
           },
@@ -34088,8 +34088,8 @@
             "text": "Well uh, look Ross I uh, I think Carol’s great and I’m sure you’re a very attractive man, but I….",
             "emotion_tags": [],
             "addressed_to": [
-              "Carol",
-              "Ross"
+              "Ross",
+              "Carol"
             ],
             "stage_direction": "not quite sure of how to answer that"
           },
@@ -35855,8 +35855,8 @@
             "text": "Because it says \"Captain Ross\" on the side and \"I hate Monica\" on the bottom.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -38755,8 +38755,8 @@
             "text": "Okay. Oh umm, Chandler, Monica is looking for you.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -42309,8 +42309,8 @@
             "text": "Oh come on guys, it’s not like I moved to Europe! I just moved across the hall! And we would have you over all the time if it weren’t for Monica’s allergies. You’re right, I could never lie to you. She hates you. Should I get that? Hello? Uh no, Joey’s not here right now. Can I take a message? Yeah, okay so the audition has been moved from 5:00 to 2:30? Okay great. Bye.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Monica"
+              "Monica",
+              "Joey"
             ],
             "stage_direction": "struggles to get this out The duck quacks. The phone rings. Laughs, then answers the phone. Listens Listens Listens Listens. Hangs up the phone and goes to write the message on the Magna-Doodle on the door but Monica walks in and forces him to jump out of the way."
           },
@@ -42632,8 +42632,8 @@
             "text": "She's checking the coats. Joey, I'm gonna go wash the cab smell off my hands. Will you get me a white Zinfandel, and a glass of red for Janice.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Janice"
+              "Janice",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -43998,8 +43998,8 @@
             "text": "Oh God, thank you! Umm, uh, Mr. Stevens I’d like you to meet my friends uh, this is Phoebe, Monica, and Chandler.",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Chandler"
+              "Monica",
+              "Phoebe"
             ],
             "stage_direction": "Runs and gives all of them a group hug."
           },
@@ -44066,8 +44066,8 @@
             "text": "So uh, Monica is Ross’s sister.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -44572,8 +44572,8 @@
             "text": "Ross, Joey is not here.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -45001,8 +45001,8 @@
             "text": "Ross, look, I know I’ve been giving you a lot of jabs and it’s partly because I’m very protective of Lizzie, and partly because well, they just keep coming to me. But I have to admit that after all the wonderful things that Lizzie has told me and the many, many, many stories that Rachel has told me that, well you’re not all bad.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": "pause pause pause"
           },
@@ -45777,8 +45777,8 @@
             "text": "Hey Ross listen Chandler got you out of going to the lesbian sandwich museum this weekend!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -47565,8 +47565,8 @@
             "text": "Chandler, please don’t think I was trying to pressure you. Phoebe and Rachel…",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -47575,8 +47575,8 @@
             "text": "Phoebe and Rachel! So the people that knew about our wedding before me were you, Phoebe and Rachel, Heldi, and apparently some band called Starlight Magic 7 who are available by the way!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Phoebe"
+              "Phoebe",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -49212,8 +49212,8 @@
             "text": "From now on, it’s gonna be Joey and Ross, best friends. Okay! We’re gonna be the new Joey and Chandler.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": "They shake hands."
           }
@@ -49803,8 +49803,8 @@
             "text": "Chandler’s gonna ask Monica to marry him!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -50128,8 +50128,8 @@
             "text": "Are any of you guys free tonight? My boss is hosting this charity event for underprivileged kids and the more people I bring, the better I look. So, Monica? Chandler?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -51044,8 +51044,8 @@
             "text": "Monica! Chandler!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "approaching them with a woman in tow"
           },
@@ -51103,8 +51103,8 @@
             "text": "Oh, I’m sorry. Lisa, Monica, Chandler. We used to date.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "Introduces them. nodding at each"
           },
@@ -52494,8 +52494,8 @@
             "text": "Isn’t it incredible?! Monica and Chandler, gettin’ married.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -52714,8 +52714,8 @@
             "text": "Yeah, I’m pretty confident about that. That’s what makes it so easy for me to be 80% happy for Monica and Chandler! It would be nice to have a little guarantee though.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -53018,8 +53018,8 @@
             "text": "Monica face it, Chandler is against marriage. And-and always will be!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -53221,8 +53221,8 @@
             "text": "Ross! I just had a conversation with her, and she said that she and Joey made a deal!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -53318,8 +53318,8 @@
             "text": "Look, Chandler I don’t think us getting our asses kicked is a solution. Okay? Just go and find Monica!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -53572,8 +53572,8 @@
             "text": "Phoebe! You picked Joey and Ross?! You can not have two backups!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Joey"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -53689,8 +53689,8 @@
             "text": "All right well let’s see, Ross is a good father, but Joey has a boat—This is hard!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -53763,8 +53763,8 @@
             "text": "Okay, y’know what?! I know-I know how to settle this! All right here, this is what we’re gonna do! I’m gonna write Joey on one napkin and I’m gonna right Ross on the other napkin and we are going to pick one! And that person is going to be our backup! Okay?",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": "does so does so"
           },
@@ -54695,8 +54695,8 @@
             "text": "Are any of you guys free tonight? My boss is hosting this charity event for underprivileged kids and the more people I bring, the better I look. So, Monica? Chandler?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -55611,8 +55611,8 @@
             "text": "Monica! Chandler!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "approaching them with a woman in tow"
           },
@@ -55670,8 +55670,8 @@
             "text": "Oh, I’m sorry. Lisa, Monica, Chandler. We used to date.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "Introduces them. nodding at each"
           },
@@ -57061,8 +57061,8 @@
             "text": "Isn’t it incredible?! Monica and Chandler, gettin’ married.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -57281,8 +57281,8 @@
             "text": "Yeah, I’m pretty confident about that. That’s what makes it so easy for me to be 80% happy for Monica and Chandler! It would be nice to have a little guarantee though.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -57585,8 +57585,8 @@
             "text": "Monica face it, Chandler is against marriage. And-and always will be!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -57788,8 +57788,8 @@
             "text": "Ross! I just had a conversation with her, and she said that she and Joey made a deal!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -57885,8 +57885,8 @@
             "text": "Look, Chandler I don’t think us getting our asses kicked is a solution. Okay? Just go and find Monica!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -58139,8 +58139,8 @@
             "text": "Phoebe! You picked Joey and Ross?! You can not have two backups!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Joey"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -58256,8 +58256,8 @@
             "text": "All right well let’s see, Ross is a good father, but Joey has a boat—This is hard!",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -58330,8 +58330,8 @@
             "text": "Okay, y’know what?! I know-I know how to settle this! All right here, this is what we’re gonna do! I’m gonna write Joey on one napkin and I’m gonna right Ross on the other napkin and we are going to pick one! And that person is going to be our backup! Okay?",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": "does so does so"
           },

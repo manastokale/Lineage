@@ -28,8 +28,8 @@
             "text": "Oh, and then Monica joked that she wouldn’t go out with a guy like Chandler...",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "voice-over"
           },
@@ -52,8 +52,8 @@
             "text": "Oh-oh! And then Ross’s new girlfriend, Bonnie, shows up and Rachel convinced her to save her head. And then Ross and Rachel kiss, and now Ross has to choose between Rachel and the bald girl and I don’t know what happened there either...",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": "voice-over"
           },
@@ -1000,8 +1000,8 @@
             "text": "Look, Ross, you have what you want, you’re back with Rachel. If you bring this up now you’re gonna wreck the best thing that even happened to you.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -5232,8 +5232,8 @@
             "text": "I have so got it. There’s gonna be rumours about this, there’s no way to stop it. Sophie knows, Monica and Phoebe know.",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Monica"
+              "Monica",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -5242,8 +5242,8 @@
             "text": "How do Monica and Phoebe know?",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Monica"
+              "Monica",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -6533,8 +6533,8 @@
             "text": "Please don’t kick Monica and Rachel out, this wasn’t there fault, it was mine.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Monica"
+              "Monica",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -10709,8 +10709,8 @@
             "text": "Phoebe, Ross sucks!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -11851,8 +11851,8 @@
             "text": "You don’t have to do that, Ross and Joey aren’t here, you can watch the parade if you want.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": ""
           },
@@ -12301,8 +12301,8 @@
             "text": "Hey Gunther, have you uh, have you seen Chandler?",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Gunther"
+              "Gunther",
+              "Chandler"
             ],
             "stage_direction": "entering"
           },
@@ -16282,8 +16282,8 @@
             "text": "Happy Chanukah, Monica! May your Christmas be snowy, Joey! Happy New Year, Chandler and Ross. Spin the draddle, Rachel!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Chandler"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": "singing"
           },
@@ -16960,8 +16960,8 @@
             "text": "Happy, happy Chanukah, Chandler and Monica. Very merry…",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Monica"
+              "Monica",
+              "Chandler"
             ],
             "stage_direction": "singing"
           },
@@ -19431,8 +19431,8 @@
             "text": "And you… Ross, I believe, if you check Rachel’s bag you will find a half-eaten box of cookies in there.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": "to Rachel"
           },
@@ -21916,8 +21916,8 @@
             "text": "Chandler, look they’re actors. They’re there to do a job, just ‘cause they work together, doesn’t mean they’re gonna get together. I mean just ‘cause it happened with Susan Sarandon and Tim Robbins, it doesn’t mean it’s gonna happen with them.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Susan"
+              "Susan",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -26931,8 +26931,8 @@
             "text": "All right, come on look, Ross can take care of himself! It’s not like he’s…Chandler!",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -29794,8 +29794,8 @@
             "text": "Ross, that girl just spent the entire evening talking to your friends, asking to hear stories about you, looking through Monica’s photo albums, I mean you don’t do that if you’re just in it for two weeks.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -31843,8 +31843,8 @@
             "text": "Ross, are you there? Ross, I don’t know if you can hear this but… I’m gonna talk anyway, uh, I’m in the States with you sister and your friends and it’s all over with Colin. I came here to tell you that, and to tell you—Yes, Joey you can have all the chocolate you want, just take it! Uh, I came here to tell you that I love you.",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Ross"
+              "Ross",
+              "Joey"
             ],
             "stage_direction": "Ross has moved to the window, apparently so that he can hear better."
           },
@@ -36199,8 +36199,8 @@
             "text": "Monica and Rachel made out.",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Monica"
+              "Monica",
+              "Rachel"
             ],
             "stage_direction": "Giggles like a schoolboy and Monica glares at him."
           }
@@ -38718,7 +38718,7 @@
             "text": "Okay, everybody, this is Rachel, another Lincoln High survivor. This is everybody, this is Chandler, and Phoebe, and Joey, and- you remember my brother Ross?",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
+              "Ross",
               "Phoebe"
             ],
             "stage_direction": "To Rachel"
@@ -39474,8 +39474,8 @@
             "text": "Ross, that girl just spent the entire evening talking to your friends, asking to hear stories about you, looking through Monica’s photo albums, I mean you don’t do that if you’re just in it for two weeks.",
             "emotion_tags": [],
             "addressed_to": [
-              "Monica",
-              "Ross"
+              "Ross",
+              "Monica"
             ],
             "stage_direction": ""
           },
@@ -39777,8 +39777,8 @@
             "text": "Come on, Ross? Remember back in college, when he fell in love with Carol and bought her that ridiculously expensive crystal duck?",
             "emotion_tags": [],
             "addressed_to": [
-              "Carol",
-              "Ross"
+              "Ross",
+              "Carol"
             ],
             "stage_direction": ""
           }
@@ -40460,8 +40460,8 @@
             "text": "Yeah. It’s just gonna be too hard. Y’know? I mean, it’s Ross. How can I watch him get married? Y’know it’s just, it’s for the best, y’know it is, it’s… Y’know, plus, somebody’s got to stay here with Phoebe! Y’know she’s gonna be pretty big by then, and she needs someone to help her tie her shoes; drive her to the hospital in case she goes into labour.",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -41031,8 +41031,8 @@
             "text": "Okay, now uh, in terms of the invite list, I’ve got you, me, and Chandler and I’m gonna invite Gunther ‘cause, well, we’ve been talking about this pretty loud.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Gunther"
+              "Gunther",
+              "Chandler"
             ],
             "stage_direction": ""
           },
@@ -42034,8 +42034,8 @@
             "text": "All right, okay, this is great, uh, Chandler, you get behind the desk. And-and when she comes in hopefully, she won’t recognise you because, well, why would she? Uh, okay, and then you buzz Ross and I. You be Mr. Gonzalez, and I’ll be uh, Mr. Wong.",
             "emotion_tags": [],
             "addressed_to": [
-              "Chandler",
-              "Ross"
+              "Ross",
+              "Chandler"
             ],
             "stage_direction": "to Ross"
           },
@@ -42073,8 +42073,8 @@
             "text": "Okay, which one of you guys is Gunther Central-Perk? Hey, Joey?",
             "emotion_tags": [],
             "addressed_to": [
-              "Joey",
-              "Gunther"
+              "Gunther",
+              "Joey"
             ],
             "stage_direction": "Sees Joey."
           },
@@ -43422,8 +43422,8 @@
             "text": "Phoebe, I’m going to Ross’s wedding because he is my ex-boyfriend and that would be really uncomfortable. Not because, I’m still in love with him! I mean, hey, y’know, I like Ross as much as the next guy, y’know? Clearly I have feelings for him, but feelings don’t mean love! I mean, I still have loving feelings for Ross. Yeah! But, I have, I have continuing feelings of love, but that doesn’t mean that-that I’m still in love with him. Y’know? I-I have sexual feelings for him, but I do love him—Ohh! Oh my God! Oh my—why didn’t you tell me?!!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -44590,8 +44590,8 @@
             "text": "I—Rachel, you can’t go! Ross loves Emily!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },
@@ -45744,8 +45744,8 @@
             "text": "Phoebe, I’m going to Ross’s wedding because he is my ex-boyfriend and that would be really uncomfortable. Not because, I’m still in love with him! I mean, hey, y’know, I like Ross as much as the next guy, y’know? Clearly I have feelings for him, but feelings don’t mean love! I mean, I still have loving feelings for Ross. Yeah! But, I have, I have continuing feelings of love, but that doesn’t mean that-that I’m still in love with him. Y’know? I-I have sexual feelings for him, but I do love him—Ohh! Oh my God! Oh my—why didn’t you tell me?!!",
             "emotion_tags": [],
             "addressed_to": [
-              "Phoebe",
-              "Ross"
+              "Ross",
+              "Phoebe"
             ],
             "stage_direction": ""
           },
@@ -46912,8 +46912,8 @@
             "text": "I—Rachel, you can’t go! Ross loves Emily!",
             "emotion_tags": [],
             "addressed_to": [
-              "Rachel",
-              "Ross"
+              "Ross",
+              "Rachel"
             ],
             "stage_direction": ""
           },

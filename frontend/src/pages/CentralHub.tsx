@@ -110,6 +110,7 @@ export default function CentralHub() {
   const scriptPanelRef = useRef<HTMLElement>(null)
   const askScrollRef = useRef<HTMLDivElement>(null)
   const askInputRef = useRef<HTMLInputElement>(null)
+  const pendingAskFocusRef = useRef(false)
   const sceneAnchorRefs = useRef<Record<string, HTMLElement | null>>({})
   const lineAnchorRefs = useRef<Record<number, HTMLButtonElement | null>>({})
   const [sceneInViewId, setSceneInViewId] = useState("")
@@ -192,18 +193,14 @@ export default function CentralHub() {
           .map((entry) => entry.speaker as string),
       ),
     )
-    return names.sort((left, right) => {
-      const leftMainIndex = MAIN_CAST_ORDER.indexOf(left as (typeof MAIN_CAST_ORDER)[number])
-      const rightMainIndex = MAIN_CAST_ORDER.indexOf(right as (typeof MAIN_CAST_ORDER)[number])
-      const leftIsMain = leftMainIndex !== -1
-      const rightIsMain = rightMainIndex !== -1
-      if (leftIsMain && rightIsMain) return leftMainIndex - rightMainIndex
-      if (leftIsMain !== rightIsMain) return leftIsMain ? -1 : 1
-      const leftActive = selectedSceneCast.has(left) ? 1 : 0
-      const rightActive = selectedSceneCast.has(right) ? 1 : 0
-      if (leftActive !== rightActive) return rightActive - leftActive
-      return left.localeCompare(right)
-    })
+    const orderWithinGroup = (groupNames: string[]) => {
+      const mainCast = MAIN_CAST_ORDER.filter((name) => groupNames.includes(name))
+      const others = groupNames.filter((name) => !MAIN_CAST_ORDER.includes(name as (typeof MAIN_CAST_ORDER)[number]))
+      return [...mainCast, ...others]
+    }
+    const inScene = names.filter((name) => selectedSceneCast.has(name))
+    const outOfScene = names.filter((name) => !selectedSceneCast.has(name))
+    return [...orderWithinGroup(inScene), ...orderWithinGroup(outOfScene)]
   }, [scriptTimeline, selectedSceneCast])
 
   const flatLines = useMemo(
@@ -314,12 +311,6 @@ export default function CentralHub() {
     if (tooHigh || tooLow) {
       lineNode.scrollIntoView({ block: "center", behavior: "smooth" })
     }
-    const active = document.activeElement as HTMLElement | null
-    const isTypingTarget =
-      active?.tagName?.toLowerCase() === "input" || active?.tagName?.toLowerCase() === "textarea" || active?.isContentEditable
-    if (!isTypingTarget && active !== lineNode) {
-      lineNode.focus({ preventScroll: true })
-    }
     setSceneInViewId(selectedLine.scene_id)
   }, [selectedLine])
 
@@ -328,9 +319,11 @@ export default function CentralHub() {
       setMobileCastOpen(false)
       setMobileLensOpen(true)
     }
-    requestAnimationFrame(() => {
-      askInputRef.current?.focus()
-    })
+    pendingAskFocusRef.current = true
+    window.setTimeout(() => {
+      askInputRef.current?.focus({ preventScroll: true })
+      pendingAskFocusRef.current = false
+    }, 0)
   }
 
   useEffect(() => {
@@ -340,16 +333,12 @@ export default function CentralHub() {
       if (tagName === "input" || tagName === "textarea" || target?.isContentEditable) return
       if (!flatLines.length) return
 
-      const isInsideScriptPanel = Boolean(target && scriptPanelRef.current?.contains(target))
-      const isLineButton = target?.getAttribute("data-line-button") === "true"
-
-      if (event.key === "Enter" && (isLineButton || isInsideScriptPanel)) {
+      const key = event.key
+      if (key === "Enter" && selectedLine) {
         event.preventDefault()
         focusAskInput()
         return
       }
-
-      const key = event.key
       if (key !== "ArrowDown" && key !== "ArrowUp") return
       event.preventDefault()
 
@@ -395,7 +384,7 @@ export default function CentralHub() {
 
     window.addEventListener("keydown", onKeyDown, true)
     return () => window.removeEventListener("keydown", onKeyDown, true)
-  }, [flatLines, isMobileViewport, sceneIndexById, scriptScenes, selectedLine])
+  }, [flatLines, sceneIndexById, scriptScenes, selectedLine])
 
   useEffect(() => {
     if (!activeEpisodeId || !expandedCastName || castProfiles[expandedCastName] !== undefined) return
@@ -479,6 +468,34 @@ export default function CentralHub() {
     if (!container || !anchor) return
     container.scrollTo({ top: anchor.offsetTop - 12, behavior: "smooth" })
     setSceneInViewId(sceneId)
+  }
+
+  const activateLine = ({
+    lineIndex,
+    sceneId,
+    speaker,
+    text,
+    sceneLabel,
+    focusAsk = false,
+  }: {
+    lineIndex: number
+    sceneId: string
+    speaker: string
+    text: string
+    sceneLabel: string
+    focusAsk?: boolean
+  }) => {
+    setOpenScenes((current) => ({ ...current, [sceneId]: true }))
+    setSelectedLine({
+      lineIndex,
+      scene_id: sceneId,
+      speaker,
+      text,
+      sceneLabel,
+    })
+    if (focusAsk) {
+      focusAskInput()
+    }
   }
 
   const appendAskThreadMessage = (contextIndex: number, message: AskMessage) => {
@@ -631,7 +648,7 @@ export default function CentralHub() {
   const sidebarCastPane = <div className="h-full">{castPaneContent}</div>
 
   const characterLensPaneContent = (
-    <section className="grid h-full min-h-0 grid-rows-[auto_auto_1fr_auto] border-4 border-black bg-white shadow-hard-sm">
+    <section className="grid min-h-[30rem] grid-rows-[auto_auto_1fr_auto] border-4 border-black bg-white shadow-hard-sm md:h-[calc(100dvh-141px)] min-[1450px]:h-full min-[1450px]:min-h-0">
       <div className="relative border-b-4 border-black bg-primary px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <div className="font-black uppercase tracking-[0.18em]">Character Lens</div>
@@ -723,25 +740,25 @@ export default function CentralHub() {
       </div>
 
       <div className="border-t-4 border-black bg-primary p-3">
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <form
+          className="flex flex-col gap-2 sm:flex-row"
+          onSubmit={(event) => {
+            event.preventDefault()
+            void handleAsk()
+          }}
+        >
           <input
             ref={askInputRef}
             value={askText}
             onChange={(event) => setAskText(event.target.value)}
             maxLength={700}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault()
-                void handleAsk()
-              }
-            }}
             className="min-w-0 flex-1 border-2 border-black bg-cream px-3 py-2 font-bold"
             placeholder={selectedLine ? `Ask ${selectedLine.speaker} from this moment…` : "@ross what are you thinking?"}
           />
-          <button onClick={() => void handleAsk()} className="border-2 border-black bg-black px-4 py-2 font-black uppercase text-white sm:shrink-0">
+          <button type="submit" className="border-2 border-black bg-black px-4 py-2 font-black uppercase text-white sm:shrink-0">
             Ask
           </button>
-        </div>
+        </form>
         {askError ? <div className="mt-2 text-xs font-black uppercase text-red-700">{askError}</div> : null}
       </div>
     </section>
@@ -812,7 +829,7 @@ export default function CentralHub() {
   return (
     <Layout headerContent={headerPane} sidebarExtra={sidebarCastPane}>
       <div
-        className="grid min-h-0 gap-4 overflow-visible xl:grid-cols-[minmax(0,1fr)_420px]"
+        className="grid min-h-0 gap-4 overflow-y-auto overflow-x-hidden min-[1450px]:h-full min-[1450px]:grid-cols-[minmax(0,1fr)_420px]"
         onTouchStart={(event) => {
           if (!isMobileViewport) return
           const touch = event.changedTouches[0]
@@ -834,7 +851,7 @@ export default function CentralHub() {
           setMobileCastOpen((current) => !current)
         }}
       >
-        <section ref={scriptPanelRef} className="grid min-h-[34rem] min-h-0 grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm">
+        <section ref={scriptPanelRef} className="grid min-h-[34rem] grid-rows-[auto_1fr] border-4 border-black bg-white shadow-hard-sm md:h-[calc(100dvh-141px)] min-[1450px]:h-full min-[1450px]:min-h-0">
           <div className="flex flex-col gap-3 border-b-4 border-black bg-accent px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
             <div className="font-black uppercase tracking-[0.18em]">Episode Script</div>
             <div className="flex flex-wrap items-center gap-2 lg:justify-end">
@@ -949,6 +966,7 @@ export default function CentralHub() {
                             const isSelected = selectedLine?.lineIndex === line.lineIndex
                             return (
                               <button
+                                type="button"
                                 key={line.key}
                                 data-line-button="true"
                                 ref={(node) => {
@@ -957,22 +975,27 @@ export default function CentralHub() {
                                 onKeyDown={(event) => {
                                   if (event.key === "Enter") {
                                     event.preventDefault()
-                                    focusAskInput()
+                                    activateLine({
+                                      lineIndex: line.lineIndex,
+                                      sceneId: scene.sceneId,
+                                      speaker: line.speaker,
+                                      text: line.text,
+                                      sceneLabel: scene.label,
+                                      focusAsk: true,
+                                    })
                                   }
                                 }}
-                                onClick={() => {
-                                  setOpenScenes((current) => ({ ...current, [scene.sceneId]: true }))
-                                  setSelectedLine({
+                                onClick={(event) => {
+                                  if (event.detail === 0) {
+                                    return
+                                  }
+                                  activateLine({
                                     lineIndex: line.lineIndex,
-                                    scene_id: scene.sceneId,
+                                    sceneId: scene.sceneId,
                                     speaker: line.speaker,
                                     text: line.text,
                                     sceneLabel: scene.label,
                                   })
-                                  if (isMobileViewport) {
-                                    setMobileCastOpen(false)
-                                    setMobileLensOpen(true)
-                                  }
                                 }}
                                 className={`w-full rounded-sm border-2 px-4 py-3 text-left transition ${
                                   isSelected
@@ -1021,32 +1044,36 @@ export default function CentralHub() {
           {castPaneContent}
         </div>
 
-        <aside className="hidden min-h-0 overflow-hidden md:block">
-          {characterLensPaneContent}
-        </aside>
+        {!isMobileViewport ? (
+          <aside className="hidden min-h-0 overflow-hidden md:block md:h-[calc(100dvh-141px)] min-[1450px]:h-full">
+            {characterLensPaneContent}
+          </aside>
+        ) : null}
       </div>
 
-      <div className={`fixed inset-0 z-40 bg-black/25 transition-opacity md:hidden ${mobileCastOpen || mobileLensOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
-        <button
-          type="button"
-          aria-label="Close mobile panels"
-          className="absolute inset-0"
-          onClick={() => {
-            setMobileCastOpen(false)
-            setMobileLensOpen(false)
-          }}
-        />
-        <div className={`absolute inset-y-0 left-0 w-[88vw] max-w-sm transform transition-transform ${mobileCastOpen ? "translate-x-0" : "-translate-x-full"}`}>
-          <div className="h-full border-r-4 border-black bg-white shadow-hard">
-            {castPaneContent}
+      {isMobileViewport ? (
+        <div className={`fixed inset-0 z-40 bg-black/25 transition-opacity md:hidden ${mobileCastOpen || mobileLensOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
+          <button
+            type="button"
+            aria-label="Close mobile panels"
+            className="absolute inset-0"
+            onClick={() => {
+              setMobileCastOpen(false)
+              setMobileLensOpen(false)
+            }}
+          />
+          <div className={`absolute inset-y-0 left-0 w-[88vw] max-w-sm transform transition-transform ${mobileCastOpen ? "translate-x-0" : "-translate-x-full"}`}>
+            <div className="h-full border-r-4 border-black bg-white shadow-hard">
+              {castPaneContent}
+            </div>
+          </div>
+          <div className={`absolute inset-y-0 right-0 w-[92vw] max-w-md transform transition-transform ${mobileLensOpen ? "translate-x-0" : "translate-x-full"}`}>
+            <div className="h-full bg-white shadow-hard">
+              {characterLensPaneContent}
+            </div>
           </div>
         </div>
-        <div className={`absolute inset-y-0 right-0 w-[92vw] max-w-md transform transition-transform ${mobileLensOpen ? "translate-x-0" : "translate-x-full"}`}>
-          <div className="h-full bg-white shadow-hard">
-            {characterLensPaneContent}
-          </div>
-        </div>
-      </div>
+      ) : null}
     </Layout>
   )
 }

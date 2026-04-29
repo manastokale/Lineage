@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import time
 
-import config  # noqa: F401
+import config
 from llm.providers import active_providers, usage_snapshot
 from routers import agents, episodes
 
@@ -47,14 +47,13 @@ def stats_overview():
     if _stats_cache is not None and (now - _stats_cache_at) < _STATS_CACHE_TTL_SECONDS:
         return _stats_cache
 
-    from data.episode_repository import EXPECTED_SEASON_EPISODE_COUNTS, list_all_episodes, season_arc_health
+    from data.episode_repository import EXPECTED_SEASON_EPISODE_COUNTS, list_all_episodes
     from debug_state import recent_rerank_traces
     from memory.chroma_client import (
         CHROMA_MODE,
         COLLECTION_NAME,
         MAIN_SCRIPT_COLLECTION_NAME,
         arc_summary_storage_available,
-        character_arc_counts_by_episode,
         count_collection_documents,
     )
 
@@ -62,14 +61,19 @@ def stats_overview():
     episodes = list_all_episodes()
     parsed_seasons = sorted({int(str(item.get("episode_id", ""))[1:3]) for item in episodes if str(item.get("episode_id", "")).startswith("s")})
     chroma_connected = arc_summary_storage_available()
-    arc_counts_by_episode = character_arc_counts_by_episode() if chroma_connected else {}
+    expose_debug = config.LINEAGE_DEBUG_RERANK and config.LINEAGE_EXPOSE_DEBUG_STATS
     payload = {
         "status": "ok",
         "dialogue_provider": provider_snapshot.get("dialogue_provider"),
         "dialogue_model": provider_snapshot.get("dialogue_model"),
+        "summary_provider": provider_snapshot.get("summary_provider"),
         "summary_model": provider_snapshot.get("summary_model"),
+        "arc_summary_provider": provider_snapshot.get("arc_summary_provider"),
         "arc_summary_model": provider_snapshot.get("arc_summary_model"),
+        "ask_provider": provider_snapshot.get("ask_provider"),
         "ask_model": provider_snapshot.get("ask_model"),
+        "gemini_configured": provider_snapshot.get("gemini_configured"),
+        "groq_configured": provider_snapshot.get("groq_configured"),
         "response_delay_seconds": provider_snapshot.get("response_delay_seconds"),
         "dummy_mode": config.USE_DUMMY_DATA,
         "chroma": {
@@ -92,13 +96,9 @@ def stats_overview():
         },
         "usage": usage_snapshot(),
         "debug": {
-            "rerank_enabled": config.LINEAGE_DEBUG_RERANK,
-            "recent_rerank_traces": recent_rerank_traces(5) if config.LINEAGE_DEBUG_RERANK else [],
+            "rerank_enabled": expose_debug,
+            "recent_rerank_traces": recent_rerank_traces(5) if expose_debug else [],
         },
-        "seasons": [
-            season_arc_health(season, arc_counts_by_episode=arc_counts_by_episode)
-            for season in sorted(EXPECTED_SEASON_EPISODE_COUNTS.keys())
-        ],
     }
     _stats_cache = payload
     _stats_cache_at = now

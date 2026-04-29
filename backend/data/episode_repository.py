@@ -223,75 +223,6 @@ def _episode_distance(from_episode_id: str, to_episode_id: str) -> int:
     return max(0, (to_season * 100 + to_number) - (from_season * 100 + from_number))
 
 
-def _rerank_memory_chunks(
-    items: list[dict],
-    query_text: str,
-    through_episode_id: str,
-    *,
-    participant_focus: set[str] | None = None,
-    limit: int = 5,
-) -> list[dict]:
-    if not items:
-        return []
-
-    query = _normalize_text(query_text).lower()
-    query_tokens = _tokenize_for_rerank(query_text)
-    participant_focus = {name for name in (participant_focus or set()) if name}
-    ranked: list[tuple[float, tuple[int, int], dict]] = []
-
-    for item in items:
-        summary = _normalize_text(str(item.get("summary", "")))
-        title = _normalize_text(str(item.get("title", "")))
-        combined = f"{title} {summary}".lower()
-        summary_tokens = _tokenize_for_rerank(combined)
-        overlap = len(query_tokens & summary_tokens)
-        title_overlap = len(query_tokens & _tokenize_for_rerank(title))
-        phrase_bonus = 0.0
-        if query and len(query) >= 16 and query in combined:
-            phrase_bonus += 3.0
-
-        participant_bonus = 0.0
-        participants = {str(name).strip() for name in item.get("participants", []) if str(name).strip()}
-        if participant_focus and participants:
-            participant_bonus += 1.5 * len(participant_focus & participants)
-
-        query_name_hits = 0
-        for name in participant_focus or set():
-            normalized = name.lower()
-            if normalized and normalized in combined:
-                query_name_hits += 1
-
-        distance = _episode_distance(str(item.get("episode_id", "")), through_episode_id)
-        recency_bonus = 1.0 / (1.0 + distance / 2.0)
-
-        score = (
-            overlap * 3.5
-            + title_overlap * 1.5
-            + phrase_bonus
-            + participant_bonus
-            + query_name_hits * 1.2
-            + recency_bonus
-        )
-        ranked.append((score, _episode_sort_key(item), item))
-
-    ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
-    deduped: list[dict] = []
-    seen: set[tuple[str, str, str]] = set()
-    for _, _, item in ranked:
-        key = (
-            str(item.get("episode_id", "")),
-            str(item.get("title", "")),
-            str(item.get("summary", "")),
-        )
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append(item)
-        if len(deduped) >= limit:
-            break
-    return deduped
-
-
 def _rerank_memory_chunks_with_debug(
     items: list[dict],
     query_text: str,
@@ -721,7 +652,10 @@ def _generate_arc_summaries_for_episode_json(
             prompt,
             role="arc_summary",
             normalize="multiline",
-            usage_metadata={"characters": _episode_characters_with_lines(episode)},
+            usage_metadata={
+                "feature": "annotated_script_generation",
+                "characters": _episode_characters_with_lines(episode),
+            },
             model_override=model_override,
         )
         _write_arc_summary_raw_output(episode["episode_id"], script_raw, "script")
@@ -776,7 +710,10 @@ def _generate_arc_summaries_for_episode_json(
             arcs_prompt,
             role="arc_summary",
             normalize="multiline",
-            usage_metadata={"characters": _episode_characters_with_lines(episode)},
+            usage_metadata={
+                "feature": "character_arc_generation",
+                "characters": _episode_characters_with_lines(episode),
+            },
             model_override=model_override,
         )
         _write_arc_summary_raw_output(episode["episode_id"], arcs_raw, "arcs")

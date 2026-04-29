@@ -17,6 +17,9 @@ IS_VERCEL = bool(os.getenv("VERCEL"))
 APP_ENV = os.getenv("APP_ENV", "production" if IS_VERCEL else "development")
 USE_DUMMY_DATA = os.getenv("USE_DUMMY_DATA", "false").lower() == "true"
 LINEAGE_DEBUG_RERANK = os.getenv("LINEAGE_DEBUG_RERANK", "true" if APP_ENV == "development" else "false").lower() == "true"
+LINEAGE_EXPOSE_DEBUG_STATS = (
+    os.getenv("LINEAGE_EXPOSE_DEBUG_STATS", "true" if APP_ENV == "development" and not IS_VERCEL else "false").lower() == "true"
+)
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")

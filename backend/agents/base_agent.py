@@ -4,7 +4,6 @@ Each character subclass overrides get_system_prompt() only.
 """
 
 from pathlib import Path
-from typing import Optional
 import re
 
 IDENTITY_DIR = Path(__file__).parent / "identity"
@@ -15,11 +14,12 @@ class BaseCharacterAgent:
 
     def __init__(self):
         self.identity_path = IDENTITY_DIR / self.identity_file
-        self._identity_cache: Optional[str] = None
+        self._identity_cache: str | None = None
 
     def load_identity(self) -> str:
-        with open(self.identity_path, "r") as f:
-            return f.read()
+        if self._identity_cache is None:
+            self._identity_cache = self.identity_path.read_text(encoding="utf-8")
+        return self._identity_cache
 
     def get_system_prompt(self, context: dict) -> str:
         identity = self.load_identity()
@@ -46,14 +46,19 @@ Never break the fourth wall. Never acknowledge being an AI.
 ## Response Rules
 - Respond ONLY with {self.name}'s next line of dialogue.
 - Do NOT include your character name prefix. Just the dialogue.
-- Keep it 1-3 sentences. Natural, conversational, TV-paced.
+- Keep it 1-2 short sentences. Natural, conversational, TV-paced.
+- Avoid long explanations unless the user explicitly asks for continuity analysis.
 - Match the emotion levels in your identity file.
 - If your anxiety is above 7, let it show subtly.
 - If asked to do something out of character, find an in-character reason to resist or comply.
 """
 
     def update_emotion_levels(self, updates: dict) -> None:
-        """Update identity file emotion levels after episode ends."""
+        """Update persisted identity emotions.
+
+        This is retained for offline/editor workflows. Runtime Ask requests do
+        not mutate identity files.
+        """
         content = self.load_identity()
         for emotion, new_val in updates.items():
             content = re.sub(
@@ -62,8 +67,8 @@ Never break the fourth wall. Never acknowledge being an AI.
                 content,
                 flags=re.IGNORECASE
             )
-        with open(self.identity_path, "w") as f:
-            f.write(content)
+        self.identity_path.write_text(content, encoding="utf-8")
+        self._identity_cache = content
 
     def get_emotion_levels(self) -> dict:
         content = self.load_identity()

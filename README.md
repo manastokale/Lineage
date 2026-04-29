@@ -1,121 +1,60 @@
 # Lineage
 
-Lineage is a screenplay intelligence workspace for exploring a TV script as a living document instead of a flat transcript. It lets a user read an episode in screenplay form, click any dialogue line, and ask a character a question from that exact moment in time. It also shows prior character arcs and relationship context so answers stay grounded in what a character would realistically know.
+Lineage is a moment-aware AI workspace for exploring *Friends* like a living script, not a flat transcript.
 
-**DEPLOYED APP LINK**
-[https://lineage-sooty.vercel.app]
+Pick a dialogue line, press Enter, and ask a character from that exact point in the episode. The answer is constrained by the script moment, prior character memory, shared interactions, and continuity guardrails, so characters do not casually know things that have not happened yet.
 
-**Home Page:**  
+**Live app:** [lineage-sooty.vercel.app](https://lineage-sooty.vercel.app)
+
 ![Home Page](homepage.png)
-
-**Rerank Debugger:**  
 ![Rerank debugger](rerank_dev.png)
-
-**Prior Relationship Arc Summariser:**  
 ![Character Arcs](relation_graph.png)
 
-## What it is
+## What You Can Do
 
-Lineage sits somewhere between a script reader, a canon-memory system, and a character-aware chat interface.
+- **Read episodes as a navigable screenplay.** Move line-by-line, jump scenes, and use the vertical scene selector to stay oriented.
+- **Ask from a specific moment.** Highlight a line, hit Enter, and the Ask cursor opens for that exact character/context.
+- **Stay inside Friends canon.** Ask is guarded to answer only from Friends context, resist prompt manipulation, and avoid future spoilers from a character POV.
+- **Inspect continuity risks.** The scanner flags possible contradictions by extracting semantic claims and validating them against prior memory.
+- **Analyze edited dialogue.** Change a line locally and run impact analysis only after the dialogue actually changes.
+- **Explore relationship memory.** The graph view shows prior character arcs and shared interactions before the active episode.
+- **Track model usage.** Usage shows provider health, RPD, feature spread, live model consumption, and Ask rerank traces.
+- **Learn in-app.** The Guide button walks new users through the problem, workflow, and expected outputs.
 
-The current product has three main surfaces:
+## Why It Exists
 
-- **Hub**: a screenplay-style viewer for the episode transcript
-- **Graph**: a character relationship view with prior arcs and interactions
-- **Usage**: a lightweight health dashboard for memory, models, and data coverage
+Most character chat demos collapse time. A character answers from the whole show, the internet, or vague recap memory.
 
-Instead of replaying a transcript like a chat log, Lineage treats the script as a document with addressable moments. That makes it much easier to reason about continuity, character knowledge, and context.
+Lineage solves a narrower problem: **what could this character plausibly say at this exact line?**
 
-## Why it exists
+That makes it useful for continuity review, story analysis, narrative AI demos, and anyone interested in grounded character reasoning instead of free-form roleplay.
 
-Most LLM-based story tools are good at generating text, but weak at respecting continuity. Characters often answer questions they should not know the answer to yet, and story memory becomes vague or generic very quickly.
+## How It Works
 
-Lineage was built to solve that problem. The goal is to make character interaction feel constrained by **time, perspective, and prior experience**, not by generic chatbot behavior.
+1. Friends transcripts are parsed into seasons, episodes, scenes, and dialogue lines.
+2. Prior character arcs and shared interaction summaries are generated and stored.
+3. Ask retrieves and reranks only relevant prior memories for the selected moment.
+4. Prompt guardrails keep answers short, Friends-only, character-aware, and timeline-safe.
+5. Continuity scanning extracts meaning from current lines, retrieves older context, and validates possible contradictions.
+6. Edit impact compares a changed line against prior memory, local scene context, and downstream dialogue.
 
-That makes it useful for:
+## Product Surfaces
 
-- writers and story editors
-- people studying character continuity
-- fans exploring a long-running show in a structured way
-- anyone interested in grounded narrative AI rather than free-form roleplay
+- **Hub:** screenplay feed, inline Ask, continuity cards, edit-impact workbench, scene selector, and cast lens.
+- **Graph:** character relationship exploration with prior arcs and interaction memory.
+- **Usage:** system health, provider routing, model limits, RPD, feature consumption, and retrieval debug traces.
 
-## Who it is for
+## Tech Stack
 
-The best fit today is:
+- React + TypeScript + Tailwind frontend
+- FastAPI backend
+- Chroma-backed local memory store
+- exported read-only memory for Vercel
+- retrieval-augmented generation with reranking
+- multi-provider LLM routing and usage telemetry
+- per-device Ask threads, rate limits, and guardrail retries
 
-- **writers’ room / story analysis use cases**
-- **continuity and canon exploration**
-- **AI product demos for narrative interfaces**
-
-It is also a strong portfolio project for roles in:
-
-- data science
-- machine learning
-- applied AI / LLM products
-- retrieval systems
-- intelligent UX / human-AI interaction
-
-## What makes it different
-
-Lineage is not just “chat with a character.”
-
-It combines:
-
-- **structured parsing** of screenplay-like transcripts
-- **time-aware retrieval** so a character only answers from the correct point in the story
-- **character-specific memory** and **interaction memory**
-- **chunk reranking** so retrieved memory is re-scored against the current question and nearby scene context before generation
-- **reference-aware recollection** so memory-style questions can show which prior episode chunks informed the answer
-- **document-first UI** rather than a pure chatbot shell
-
-The result is closer to a narrative reasoning interface than a general chat app.
-
-## Competitors / adjacent products
-
-There is not a perfect 1:1 competitor, but adjacent products include:
-
-- **Sudowrite** and other AI writing assistants
-- **Notion AI / general LLM workspaces**
-- **screenwriting software** like Final Draft or WriterDuet
-- **lore / canon databases** used by fandoms or narrative teams
-
-What Lineage does differently is combine script reading, retrieval, character perspective, and narrative memory in one interface.
-
-## How it works
-
-At a high level:
-
-1. episode transcripts are parsed into structured scenes and dialogue
-2. prior character arcs and interaction summaries are generated with an LLM
-3. those memories are stored for retrieval
-4. the UI lets a user inspect a script, choose a moment, and query a character from that exact context
-
-The project supports two deployment modes:
-
-- **Local / LAN mode**: uses a live Chroma-backed memory store
-- **Vercel mode**: uses exported read-only JSON memory so the app remains serverless-friendly
-
-That means the same repo works both as a richer local development environment and as a deployable GitHub + Vercel showcase.
-
-## CS + AI concepts demonstrated
-
-This project is a good showcase because it applies several practical concepts together:
-
-- **Retrieval-Augmented Generation (RAG)** for character memory
-- **retrieval reranking** for higher-relevance memory selection
-- **context-window control** so answers stay bounded to the selected script moment
-- **entity-centric memory modeling** for characters and interactions
-- **data parsing / preprocessing** from semi-structured HTML transcripts
-- **graph-style reasoning UI** for relationships and prior interactions
-- **rate-limited LLM orchestration** across multiple models
-- **state management** across frontend, backend, and per-device sessions
-- **dual deployment architecture** for local persistence vs. serverless hosting
-
-In other words, this is not only a frontend demo. It is also a data pipeline, retrieval system, and applied AI interface.
-
-In development mode, the Usage page can also show the latest Ask rerank traces, which makes it easier to inspect why particular memory chunks were selected.
-
-## Running locally
+## Run Locally
 
 From the repo root:
 
@@ -123,36 +62,34 @@ From the repo root:
 ./scripts/friendsos.sh start local dev
 ```
 
-Then open:
+Open:
 
 ```text
 http://127.0.0.1:5173
 ```
 
-To stop it:
+Stop:
 
 ```bash
 ./scripts/friendsos.sh stop local dev
 ```
 
-## Vercel deployment
+## Deploy
 
-The repo is set up to deploy from GitHub to Vercel.
+The repo is Vercel-ready:
 
-- frontend is built from `frontend/`
-- the FastAPI backend is exposed through `api/`
-- Vercel uses the bundled read-only memory in `memory_data/`
+- frontend builds from `frontend/`
+- FastAPI routes are exposed through `api/`
+- serverless mode uses bundled memory from `memory_data/`
 
-If you regenerate character arcs locally and want Vercel to use the latest memory snapshot, run:
+After regenerating local memory, export the latest snapshot for Vercel:
 
 ```bash
 ./.venv311/bin/python scripts/export_memory_store.py
 ```
 
-For detailed deployment notes, see [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md).
+See [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md) for deployment notes.
 
-## Project summary
+## One-Line Summary
 
-Lineage is a narrative AI product built around a simple idea: a character should only answer from what they have actually lived through. The project turns that idea into a usable interface with transcript parsing, memory generation, retrieval, graph exploration, and a deployable app surface.
-
-It is both a product prototype and a portfolio-quality applied AI system.
+Lineage is a grounded narrative AI system where characters answer from what they have actually lived through, at the exact moment you select.

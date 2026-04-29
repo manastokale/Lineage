@@ -246,7 +246,7 @@ def main() -> int:
                 user_message,
                 role="arc_summary",
                 normalize="multiline",
-                usage_metadata={"characters": speaking_characters(episode)},
+                usage_metadata={"feature": "prior_memory_generation", "characters": speaking_characters(episode)},
                 model_override=args.model,
             )
             (raw_dir / f"{episode_id}.prior_arcs.json").write_text(raw, encoding="utf-8")

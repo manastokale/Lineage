@@ -66,20 +66,19 @@ export interface TimelineEntry {
   stage_direction?: string
 }
 
-export interface HealthSnapshot {
-  status: string
-  dummy_mode: boolean
-  response_delay_seconds?: number
-}
-
 export interface StatsOverview {
   status: string
   dummy_mode: boolean
   dialogue_provider: string
   dialogue_model?: string
+  summary_provider?: string
   summary_model?: string
+  arc_summary_provider?: string
   arc_summary_model?: string
+  ask_provider?: string
   ask_model?: string
+  gemini_configured?: boolean
+  groq_configured?: boolean
   response_delay_seconds?: number
   chroma: {
     connected: boolean
@@ -99,6 +98,7 @@ export interface StatsOverview {
     active_roles: Record<string, string | boolean | number | undefined>
     totals: Record<string, { requests?: number; tokens?: number }>
     role_breakdown: Record<string, Record<string, { requests?: number; tokens?: number }>>
+    feature_breakdown?: Record<string, Record<string, { requests?: number; tokens?: number }>>
     character_breakdown: Record<string, Record<string, number>>
     window_totals: Record<string, { requests_per_minute?: number; tokens_per_minute?: number; requests_per_day?: number }>
   }
@@ -139,18 +139,6 @@ export interface StatsOverview {
       }[]
     }[]
   }
-  seasons: {
-    season: number
-    parsed_episodes: number
-    expected_episodes: number
-    stored_arcs: number
-    expected_arcs: number
-    covered_arcs: number
-    overflow_arcs: number
-    fully_covered_episodes: number
-    transcript_ready: boolean
-    arc_ready: boolean
-  }[]
 }
 
 export interface AgentProfile {
@@ -194,6 +182,88 @@ export interface GraphEdge {
 export interface EpisodeGraph {
   nodes: GraphNode[]
   edges: GraphEdge[]
+}
+
+export type ContinuitySeverity = "low" | "medium" | "high"
+
+export type ContinuityCategory =
+  | "character_knowledge"
+  | "timeline"
+  | "relationship_state"
+  | "capability_continuity"
+  | "location_object"
+  | "motivation"
+  | string
+
+export interface ContinuityReference {
+  episode_id: string
+  title: string
+  summary: string
+}
+
+export interface ContinuityFlag {
+  id: string
+  episode_id: string
+  scene_id: string
+  scene_label?: string
+  line_index: number
+  speaker?: string
+  severity: ContinuitySeverity
+  category: ContinuityCategory
+  title: string
+  explanation: string
+  current_text: string
+  references: ContinuityReference[]
+  status?: string
+}
+
+export interface ContinuityReport {
+  episode_id: string
+  status: string
+  generated_at?: number
+  cache_version?: number
+  candidate_count?: number
+  cached?: boolean
+  flags: ContinuityFlag[]
+}
+
+export interface EditImpactIssue {
+  id: string
+  severity: ContinuitySeverity
+  title: string
+  explanation: string
+  line_index?: number | null
+}
+
+export interface EditRepairSuggestion {
+  id: string
+  kind: string
+  text: string
+  rationale: string
+}
+
+export interface EditImpactReport {
+  status: string
+  variant_id: string
+  episode_id: string
+  line_index: number
+  speaker: string
+  original_text: string
+  edited_text: string
+  drift_score: number
+  drift_level: ContinuitySeverity
+  summary: string
+  introduced_plot_holes: EditImpactIssue[]
+  repair_suggestions: EditRepairSuggestion[]
+  downstream_window?: {
+    line_count: number
+    mode: string
+  }
+  token_estimate?: {
+    estimated_input_tokens: number
+    estimated_output_tokens: number
+    mode: string
+  }
 }
 
 export const CHARACTER_COLORS: Record<string, string> = {

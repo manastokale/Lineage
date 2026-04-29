@@ -27,6 +27,7 @@ _ROLE_MODEL = {
 
 _usage_totals: dict[str, Counter[str]] = defaultdict(Counter)
 _role_usage: dict[str, dict[str, Counter[str]]] = defaultdict(lambda: defaultdict(Counter))
+_feature_usage: dict[str, dict[str, Counter[str]]] = defaultdict(lambda: defaultdict(Counter))
 _character_usage: dict[str, Counter[str]] = defaultdict(Counter)
 _usage_events: dict[str, list[dict[str, Any]]] = defaultdict(list)
 _MODEL_LIMITS: dict[str, dict[str, int]] = {
@@ -79,13 +80,22 @@ def _normalize_text(text: str, normalize: str) -> str:
 
 
 def _record_usage(model: str, role: str, estimated_tokens: int, usage_metadata: dict[str, Any] | None) -> None:
+    """Record successful provider calls by model, role, feature, and character.
+
+    `role` controls provider/model routing. `feature` is optional call-site
+    metadata used only for product usage reporting, so Ask, continuity checks,
+    and edit-impact calls can be separated by feature.
+    """
     timestamp = time.time()
+    metadata = usage_metadata or {}
+    feature = str(metadata.get("feature") or role).strip() or role
     _usage_totals[model]["requests"] += 1
     _usage_totals[model]["tokens"] += estimated_tokens
     _role_usage[model][role]["requests"] += 1
     _role_usage[model][role]["tokens"] += estimated_tokens
-    _usage_events[model].append({"ts": timestamp, "role": role, "tokens": estimated_tokens})
-    metadata = usage_metadata or {}
+    _feature_usage[model][feature]["requests"] += 1
+    _feature_usage[model][feature]["tokens"] += estimated_tokens
+    _usage_events[model].append({"ts": timestamp, "role": role, "feature": feature, "tokens": estimated_tokens})
     character_weights = metadata.get("character_weights")
     if isinstance(character_weights, dict) and character_weights:
         total_weight = sum(max(float(weight), 0.0) for weight in character_weights.values()) or 1.0
@@ -260,17 +270,6 @@ def _call_gemini(system_prompt: str, user_message: str, model: str, *, max_outpu
     return text
 
 
-def probe_groq() -> dict[str, Any]:
-    if not config.GROQ_API_KEY:
-        return {"ok": False, "error": "GROQ_API_KEY missing"}
-    try:
-        start = time.time()
-        _call_groq("Reply with OK.", "OK", config.GROQ_DIALOGUE_MODEL)
-        return {"ok": True, "latency_ms": int((time.time() - start) * 1000)}
-    except Exception as exc:  # pragma: no cover - health probe
-        return {"ok": False, "error": str(exc)}
-
-
 def call_llm(
     system_prompt: str,
     user_message: str,
@@ -372,7 +371,7 @@ def active_providers() -> dict[str, Any]:
 
 
 def usage_snapshot() -> dict[str, Any]:
-    models = sorted(set(_usage_totals) | set(_role_usage) | set(_character_usage))
+    models = sorted(set(_usage_totals) | set(_role_usage) | set(_feature_usage) | set(_character_usage))
     provider_snapshot = active_providers()
     return {
         "models": models,
@@ -383,9 +382,14 @@ def usage_snapshot() -> dict[str, Any]:
         "active_roles": {
             "dialogue_provider": provider_snapshot.get("dialogue_provider"),
             "dialogue_model": provider_snapshot.get("dialogue_model"),
+            "summary_provider": provider_snapshot.get("summary_provider"),
             "summary_model": provider_snapshot.get("summary_model"),
+            "arc_summary_provider": provider_snapshot.get("arc_summary_provider"),
             "arc_summary_model": provider_snapshot.get("arc_summary_model"),
+            "ask_provider": provider_snapshot.get("ask_provider"),
             "ask_model": provider_snapshot.get("ask_model"),
+            "gemini_configured": provider_snapshot.get("gemini_configured"),
+            "groq_configured": provider_snapshot.get("groq_configured"),
             "response_delay_seconds": provider_snapshot.get("response_delay_seconds"),
         },
         "totals": {
@@ -396,6 +400,13 @@ def usage_snapshot() -> dict[str, Any]:
             model: {
                 role: dict(counters)
                 for role, counters in _role_usage[model].items()
+            }
+            for model in models
+        },
+        "feature_breakdown": {
+            model: {
+                feature: dict(counters)
+                for feature, counters in _feature_usage[model].items()
             }
             for model in models
         },

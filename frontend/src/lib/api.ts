@@ -1,4 +1,12 @@
-import type { CharacterFocusProfile, Episode, EpisodeGraph, HealthSnapshot, StatsOverview, TimelineEntry } from "../types"
+import type {
+  CharacterFocusProfile,
+  ContinuityFlag,
+  ContinuityReport,
+  EditImpactReport,
+  Episode,
+  EpisodeGraph,
+  StatsOverview,
+} from "../types"
 
 const DEVICE_ID_PATTERN = /^[A-Za-z0-9._:-]{8,128}$/
 
@@ -70,6 +78,13 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
       const payload = JSON.parse(text)
       if (typeof payload?.detail === "string" && payload.detail.trim()) {
         detail = payload.detail.trim()
+      } else if (Array.isArray(payload?.detail)) {
+        detail = payload.detail
+          .map((item: { msg?: string; message?: string; type?: string }) => item?.msg || item?.message || item?.type || "")
+          .filter(Boolean)
+          .join("; ") || "Request validation failed."
+      } else if (payload?.detail && typeof payload.detail === "object") {
+        detail = payload.detail.message || payload.detail.error || "Request failed."
       }
     } catch {
       // leave raw text as-is
@@ -79,15 +94,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json()
 }
 
-export const fetchHealth = () => request<HealthSnapshot>("/api/health")
 export const fetchStatsOverview = () => request<StatsOverview>("/api/stats/overview")
 
 export const fetchEpisodes = () => request<Episode[]>("/api/episodes/")
 
-export const fetchEpisode = (id: string) => request<Episode>(`/api/episodes/${id}`)
-
-export const fetchEpisodeTimeline = (id: string) =>
-  request<TimelineEntry[]>(`/api/episodes/${id}/timeline`)
+export const fetchEpisode = (id: string) => request<Episode>(`/api/episodes/${encodeURIComponent(id)}`)
 
 export const askAgent = (
   name: string,
@@ -97,6 +108,7 @@ export const askAgent = (
     anchor_line_index: number
     question: string
     thread_messages?: { type: "user_question" | "agent_reply"; speaker: string; text: string }[]
+    continuity_flag?: ContinuityFlag
   },
 ) =>
   request<{
@@ -109,12 +121,25 @@ export const askAgent = (
   })
 
 export const fetchEpisodeGraph = (id: string) =>
-  request<EpisodeGraph>(`/api/episodes/${id}/graph`)
+  request<EpisodeGraph>(`/api/episodes/${encodeURIComponent(id)}/graph`)
+
+export const fetchEpisodeContinuity = (id: string) =>
+  request<ContinuityReport>(`/api/episodes/${encodeURIComponent(id)}/continuity`)
+
+export const analyzeLineImpact = (
+  episodeId: string,
+  lineIndex: number,
+  body: { edited_text: string },
+) =>
+  request<EditImpactReport>(`/api/episodes/${encodeURIComponent(episodeId)}/lines/${lineIndex}/impact`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
 
 export const fetchCharacterFocus = (episodeId: string, name: string) =>
-  request<CharacterFocusProfile>(`/api/episodes/${episodeId}/characters/${encodeURIComponent(name)}`)
+  request<CharacterFocusProfile>(`/api/episodes/${encodeURIComponent(episodeId)}/characters/${encodeURIComponent(name)}`)
 
 export const fetchInteractionFocus = (episodeId: string, characters: string[]) =>
   request<{ episode_id: string; title: string; participants: string[]; summary: string }[]>(
-    `/api/episodes/${episodeId}/interactions?characters=${encodeURIComponent(characters.join(","))}`,
+    `/api/episodes/${encodeURIComponent(episodeId)}/interactions?characters=${encodeURIComponent(characters.join(","))}`,
   )

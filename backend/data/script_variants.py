@@ -13,15 +13,29 @@ from data.episode_repository import get_relevant_character_arc_summaries_with_de
 from data.episode_repository import get_relevant_character_interactions_with_debug
 
 
-def _variant_dir() -> Path:
-    path = Path(config.PROJECT_ROOT) / ".run" / "script_variants"
-    path.mkdir(parents=True, exist_ok=True)
+def _variant_dir() -> Path | None:
+    path = Path("/tmp/lineage_script_variants") if config.IS_VERCEL else Path(config.PROJECT_ROOT) / ".run" / "script_variants"
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        return None
     return path
 
 
 def _variant_id(episode_id: str, line_index: int, edited_text: str) -> str:
     digest = hashlib.sha256(f"{episode_id}:{line_index}:{edited_text}:{time.time()}".encode("utf-8")).hexdigest()[:12]
     return f"{episode_id.lower()}-{line_index}-{digest}"
+
+
+def _persist_variant_report(variant_id: str, report: dict) -> None:
+    path = _variant_dir()
+    if path is None:
+        return
+    try:
+        (path / f"{variant_id}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    except OSError:
+        # Impact analysis should still return even when runtime storage is read-only.
+        return
 
 
 def _line_at(episode_id: str, line_index: int) -> dict | None:
@@ -225,5 +239,5 @@ def analyze_edit_impact(episode_id: str, line_index: int, edited_text: str) -> d
         },
         "created_at": time.time(),
     }
-    (_variant_dir() / f"{variant_id}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    _persist_variant_report(variant_id, report)
     return report
